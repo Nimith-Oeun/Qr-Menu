@@ -10,3 +10,31 @@
 export interface DemoResponse {
   message: string;
 }
+
+/**
+ * Menu item interface
+ */
+export interface MenuItem {
+  id: string;
+  name: string;
+  size: string;
+  price: string;
+  image: string;
+  category: 'drink' | 'food';
+  description?: string;
+}
+
+/**
+ * API response for menu items
+ */
+export interface MenuResponse {
+  items: MenuItem[];
+}
+
+/**
+ * API response for menu items by category
+ */
+export interface MenuByCategoryResponse {
+  drinks: MenuItem[];
+  foods: MenuItem[];
+}

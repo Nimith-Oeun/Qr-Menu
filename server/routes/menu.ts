@@ -1,0 +1,93 @@
+import { RequestHandler } from "express";
+import { MenuResponse, MenuItem, MenuByCategoryResponse } from "@shared/api";
+
+// Mock data - replace this with your actual database calls
+const mockMenuItems: MenuItem[] = [
+  // Drinks
+  ...Array.from({ length: 7 }, (_, i) => ({
+    id: `drink-${i + 1}`,
+    name: `Drink ${i + 1}`,
+    size: i % 2 === 0 ? "M" : "L",
+    price: `${2 + (i % 3)}$`,
+    image: "https://api.builder.io/api/v1/image/assets/TEMP/2e811b0fa84092c929b579286fded5e620c45c19?width=347",
+    category: 'drink' as const,
+  })),
+  // Foods
+  ...Array.from({ length: 8 }, (_, i) => ({
+    id: `food-${i + 1}`,
+    name: `Food ${i + 1}`,
+    size: i % 2 === 0 ? "M" : "L",
+    price: `${4 + (i % 4)}$`,
+    image: "https://api.builder.io/api/v1/image/assets/TEMP/977e1ee7cf4be018cd9e90c67e54df15c36e50b0?width=347",
+    category: 'food' as const,
+  })),
+];
+
+// Get all menu items
+export const handleGetMenu: RequestHandler = async (req, res) => {
+  try {
+    // TODO: Replace with actual database call
+    // const items = await db.menuItems.findAll();
+    
+    const response: MenuResponse = {
+      items: mockMenuItems,
+    };
+    res.status(200).json(response);
+  } catch (error) {
+    console.error('Error fetching menu:', error);
+    res.status(500).json({ error: 'Failed to fetch menu items' });
+  }
+};
+
+// Get menu items by category
+export const handleGetMenuByCategory: RequestHandler = async (req, res) => {
+  try {
+    const { category } = req.params;
+    
+    if (category && !['drink', 'food'].includes(category)) {
+      return res.status(400).json({ error: 'Invalid category. Must be "drink" or "food"' });
+    }
+
+    // TODO: Replace with actual database call
+    // const items = category 
+    //   ? await db.menuItems.findAll({ where: { category } })
+    //   : await db.menuItems.findAll();
+
+    const filteredItems = category 
+      ? mockMenuItems.filter(item => item.category === category)
+      : mockMenuItems;
+
+    const response: MenuResponse = {
+      items: filteredItems,
+    };
+    res.status(200).json(response);
+  } catch (error) {
+    console.error('Error fetching menu by category:', error);
+    res.status(500).json({ error: 'Failed to fetch menu items' });
+  }
+};
+
+// Get drinks and foods separately
+export const handleGetMenuSeparated: RequestHandler = async (req, res) => {
+  try {
+    console.log('handleGetMenuSeparated called'); // Debug log
+    
+    // TODO: Replace with actual database calls
+    // const drinks = await db.menuItems.findAll({ where: { category: 'drink' } });
+    // const foods = await db.menuItems.findAll({ where: { category: 'food' } });
+
+    const drinks = mockMenuItems.filter(item => item.category === 'drink');
+    const foods = mockMenuItems.filter(item => item.category === 'food');
+
+    const response: MenuByCategoryResponse = {
+      drinks,
+      foods,
+    };
+    
+    console.log('Sending response:', { drinksCount: drinks.length, foodsCount: foods.length }); // Debug log
+    res.status(200).json(response);
+  } catch (error) {
+    console.error('Error fetching separated menu:', error);
+    res.status(500).json({ error: 'Failed to fetch menu items' });
+  }
+};
