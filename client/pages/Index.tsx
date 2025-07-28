@@ -1,7 +1,11 @@
 import { useState, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 import { menuApi, MenuItem, ApiError } from "../lib/api";
+import ImageWithPlaceholder from "../components/ImageWithPlaceholder";
+import { Plus } from "lucide-react";
 
 export default function Index() {
+  const navigate = useNavigate();
   const [activeTab, setActiveTab] = useState("drink");
   const [isScrolled, setIsScrolled] = useState(false);
   const [visibleItems, setVisibleItems] = useState(new Set());
@@ -197,6 +201,17 @@ export default function Index() {
             </div>
           </div>
         </div>
+
+        {/* Add Item Button */}
+        {/* <div className="flex justify-center mt-4">
+          <button
+            onClick={() => navigate("/qr-menu-chhong_caffe/create-item")}
+            className="flex items-center gap-2 px-4 py-2 bg-cafe-orange text-white rounded-lg hover:bg-cafe-brown transition-all duration-300 shadow-lg hover:shadow-xl"
+          >
+            <Plus className="h-4 w-4" />
+            Add New Item
+          </button>
+        </div> */}
       </div>
 
       {/* Spacer */}
@@ -242,16 +257,13 @@ export default function Index() {
                       <div className="absolute top-0 left-0 right-0 h-1 bg-gradient-to-r from-cafe-orange to-cafe-brown animate-pulse" />
                     )}
                     <div className="aspect-[174/119] overflow-hidden relative">
-                      <img
+                      <ImageWithPlaceholder
                         src={item.image}
                         alt={item.name}
-                        className={`w-full h-full object-cover transition-transform duration-500 ${
-                          isVisible ? "scale-100 hover:scale-110" : "scale-110"
-                        }`}
+                        category={item.category}
+                        isVisible={isVisible}
+                        className="w-full h-full"
                       />
-                      {isVisible && (
-                        <div className="absolute inset-0 bg-gradient-to-t from-black/10 to-transparent opacity-0 hover:opacity-100 transition-opacity duration-300"></div>
-                      )}
                     </div>
                     <div
                       className={`p-3 sm:p-4 bg-white/50 transition-all duration-500 ${

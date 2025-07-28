@@ -2,7 +2,7 @@ import { RequestHandler } from "express";
 import { MenuResponse, MenuItem, MenuByCategoryResponse } from "@shared/api";
 
 // Mock data - replace this with your actual database calls
-const mockMenuItems: MenuItem[] = [
+let mockMenuItems: MenuItem[] = [
   // Drinks
   ...Array.from({ length: 7 }, (_, i) => ({
     id: `drink-${i + 1}`,
@@ -89,5 +89,53 @@ export const handleGetMenuSeparated: RequestHandler = async (req, res) => {
   } catch (error) {
     console.error('Error fetching separated menu:', error);
     res.status(500).json({ error: 'Failed to fetch menu items' });
+  }
+};
+
+// Add a new menu item
+export const handleAddMenuItem: RequestHandler = async (req, res) => {
+  try {
+    console.log('handleAddMenuItem called with body:', req.body); // Debug log
+    
+    const { name, size, price, image, category, description } = req.body;
+    
+    // Validate required fields
+    if (!name || !size || !price || !category) {
+      return res.status(400).json({ 
+        error: 'Missing required fields. Name, size, price, and category are required.' 
+      });
+    }
+    
+    // Validate category
+    if (!['drink', 'food'].includes(category)) {
+      return res.status(400).json({ 
+        error: 'Invalid category. Must be "drink" or "food"' 
+      });
+    }
+    
+    // Generate new ID
+    const newId = `${category}-${Date.now()}`;
+    
+    // Create new item
+    const newItem: MenuItem = {
+      id: newId,
+      name: name.trim(),
+      size: size.trim(),
+      price: price.trim(),
+      image: image || (category === 'drink' 
+        ? "https://api.builder.io/api/v1/image/assets/TEMP/2e811b0fa84092c929b579286fded5e620c45c19?width=347"
+        : "https://api.builder.io/api/v1/image/assets/TEMP/977e1ee7cf4be018cd9e90c67e54df15c36e50b0?width=347"),
+      category: category as 'drink' | 'food',
+      description: description?.trim() || undefined,
+    };
+    
+    // Add to mock data (TODO: Replace with actual database call)
+    mockMenuItems.push(newItem);
+    
+    console.log('New item added:', newItem); // Debug log
+    res.status(201).json(newItem);
+  } catch (error) {
+    console.error('Error adding menu item:', error);
+    res.status(500).json({ error: 'Failed to add menu item' });
   }
 };

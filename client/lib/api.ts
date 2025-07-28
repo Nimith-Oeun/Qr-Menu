@@ -10,7 +10,7 @@ class ApiError extends Error {
   }
 }
 
-async function fetchApi<T>(endpoint: string): Promise<T> {
+async function fetchApi<T>(endpoint: string, options?: RequestInit): Promise<T> {
   try {
     const url = `${API_BASE_URL}${endpoint}`;
     console.log('Fetching from:', url); // Debug log
@@ -23,6 +23,7 @@ async function fetchApi<T>(endpoint: string): Promise<T> {
       headers: {
         'Content-Type': 'application/json',
       },
+      ...options,
     });
     
     clearTimeout(timeoutId);
@@ -60,6 +61,13 @@ export const menuApi = {
   
   // Get drinks and foods separately
   getMenuSeparated: (): Promise<MenuByCategoryResponse> => fetchApi('/api/menu-separated'),
+  
+  // Add a new menu item
+  addMenuItem: (item: Omit<MenuItem, 'id'>): Promise<MenuItem> => 
+    fetchApi('/api/items', {
+      method: 'POST',
+      body: JSON.stringify(item),
+    }),
 };
 
 export { ApiError };
