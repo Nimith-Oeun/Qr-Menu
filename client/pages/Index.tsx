@@ -2,7 +2,6 @@ import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { menuApi, MenuItem, ApiError } from "../lib/api";
 import ImageWithPlaceholder from "../components/ImageWithPlaceholder";
-import { Plus } from "lucide-react";
 
 export default function Index() {
   const navigate = useNavigate();

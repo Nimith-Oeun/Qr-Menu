@@ -143,13 +143,13 @@ export default function CreateItem() {
           {/* Back Button */}
           <div className="flex justify-center">
             <Button
-              onClick={() => navigate("/qr-menu-chhong_caffe")}
+              onClick={() => navigate("/qr-menu-chhong_caffe/admin")}
               variant="outline"
               className="flex items-center gap-2"
               disabled={isSubmitting}
             >
               <ArrowLeft className="h-4 w-4" />
-              Back to Menu
+              Back to Dashboard
             </Button>
           </div>
         </div>
@@ -296,7 +296,7 @@ export default function CreateItem() {
                   <Button
                     type="button"
                     variant="outline"
-                    onClick={() => navigate("/qr-menu-chhong_caffe")}
+                    onClick={() => navigate("/qr-menu-chhong_caffe/admin")}
                     disabled={isSubmitting}
                     className="flex-1"
                   >

@@ -68,6 +68,19 @@ export const menuApi = {
       method: 'POST',
       body: JSON.stringify(item),
     }),
+  
+  // Update a menu item
+  updateMenuItem: (id: string, item: Omit<MenuItem, 'id'>): Promise<MenuItem> => 
+    fetchApi(`/api/items/${id}`, {
+      method: 'PUT',
+      body: JSON.stringify(item),
+    }),
+  
+  // Delete a menu item
+  deleteMenuItem: (id: string): Promise<{ message: string; item: MenuItem }> => 
+    fetchApi(`/api/items/${id}`, {
+      method: 'DELETE',
+    }),
 };
 
 export { ApiError };
