@@ -1,9 +1,79 @@
 import { useState, useEffect } from "react";
+import { menuApi, MenuItem, ApiError } from "../lib/api";
 
 export default function Index() {
   const [activeTab, setActiveTab] = useState("drink");
   const [isScrolled, setIsScrolled] = useState(false);
   const [visibleItems, setVisibleItems] = useState(new Set());
+  const [menuItems, setMenuItems] = useState<MenuItem[]>([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
+
+  useEffect(() => {
+    const handleScroll = () => {
+      setIsScrolled(window.scrollY > 50);
+    };
+
+    window.addEventListener("scroll", handleScroll);
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, []);
+
+  // Fetch menu data from API
+  useEffect(() => {
+    const fetchMenuData = async () => {
+      try {
+        setLoading(true);
+        setError(null);
+        
+        // First test API connectivity
+        console.log('Testing API connectivity...');
+        await menuApi.test();
+        console.log('API test successful, fetching menu...');
+        
+        const response = await menuApi.getMenuSeparated();
+        
+        // Combine drinks and foods with proper typing
+        const allItems: MenuItem[] = [...response.drinks, ...response.foods];
+        setMenuItems(allItems);
+        console.log('Menu data loaded successfully:', allItems.length, 'items');
+      } catch (err) {
+        console.error('Failed to fetch menu:', err);
+        if (err instanceof ApiError) {
+          setError(`Failed to load menu: ${err.message} (Status: ${err.status})`);
+        } else {
+          setError('Failed to load menu. Please try again later.');
+        }
+        
+        // Fallback to mock data if API fails
+        console.log('Using fallback mock data...');
+        const mockItems: MenuItem[] = [
+          // Drinks
+          ...Array.from({ length: 7 }, (_, i) => ({
+            id: `drink-${i + 1}`,
+            name: `Drink ${i + 1}`,
+            size: i % 2 === 0 ? "M" : "L",
+            price: `${2 + (i % 3)}$`,
+            image: "https://api.builder.io/api/v1/image/assets/TEMP/2e811b0fa84092c929b579286fded5e620c45c19?width=347",
+            category: 'drink' as const,
+          })),
+          // Foods
+          ...Array.from({ length: 8 }, (_, i) => ({
+            id: `food-${i + 1}`,
+            name: `Food ${i + 1}`,
+            size: i % 2 === 0 ? "M" : "L",
+            price: `${4 + (i % 4)}$`,
+            image: "https://api.builder.io/api/v1/image/assets/TEMP/977e1ee7cf4be018cd9e90c67e54df15c36e50b0?width=347",
+            category: 'food' as const,
+          })),
+        ];
+        setMenuItems(mockItems);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchMenuData();
+  }, []);
 
   useEffect(() => {
     const handleScroll = () => {
@@ -15,11 +85,23 @@ export default function Index() {
   }, []);
 
   useEffect(() => {
+    const items = document.querySelectorAll("[data-item-id]");
+  
+    // If not scrollable, show all items immediately
+    const pageNotScrollable = document.body.scrollHeight <= window.innerHeight;
+  
+    if (pageNotScrollable) {
+      const allVisible = new Set(Array.from(items).map((item) => item.getAttribute("data-item-id")));
+      setVisibleItems(allVisible);
+      return;
+    }
+  
+    // Otherwise, use observer as usual
     const observer = new IntersectionObserver(
       (entries) => {
         entries.forEach((entry) => {
           if (entry.isIntersecting) {
-            setVisibleItems((prev) => new Set([...prev, (entry.target as HTMLElement).dataset.itemId]));
+            setVisibleItems((prev) => new Set([...prev, entry.target.getAttribute("data-item-id")!]));
           }
         });
       },
@@ -28,31 +110,13 @@ export default function Index() {
         rootMargin: "0px 0px -50px 0px",
       }
     );
-
-    const items = document.querySelectorAll("[data-item-id]");
+  
     items.forEach((item) => observer.observe(item));
-
+  
     return () => observer.disconnect();
-  }, [activeTab]); // re-run when tab changes
-
-  // Separate drink and food items
-  const drinkItems = [...Array(10).keys()].map((i) => ({
-    id: `drink-${i + 1}`,
-    name: `Drink ${i + 1}`,
-    size: i % 2 === 0 ? "M" : "L",
-    price: `${2 + (i % 3)}$`,
-    image: "https://api.builder.io/api/v1/image/assets/TEMP/2e811b0fa84092c929b579286fded5e620c45c19?width=347",
-  }));
-
-  const foodItems = [...Array(8).keys()].map((i) => ({
-    id: `food-${i + 1}`,
-    name: `Food ${i + 1}`,
-    size: i % 2 === 0 ? "M" : "L",
-    price: `${4 + (i % 4)}$`,
-    image: "https://api.builder.io/api/v1/image/assets/TEMP/977e1ee7cf4be018cd9e90c67e54df15c36e50b0?width=347",
-  }));
-
-  const menuItems = activeTab === "drink" ? drinkItems : foodItems;
+  }, [activeTab]);
+    // Filter items based on active tab
+  const currentMenuItems = menuItems.filter(item => item.category === activeTab);
 
   return (
     <div className="min-h-screen bg-white relative overflow-hidden">
@@ -141,8 +205,28 @@ export default function Index() {
       {/* Menu Grid */}
       <div className="px-4 pb-8">
         <div className="max-w-sm mx-auto sm:max-w-md md:max-w-2xl lg:max-w-4xl">
-          <div className="grid grid-cols-2 gap-4 sm:gap-5 md:grid-cols-3 lg:grid-cols-4 xl:gap-6">
-            {menuItems.map((item, index) => {
+          {loading && (
+            <div className="text-center py-8">
+              <div className="inline-block animate-spin rounded-full h-8 w-8 border-b-2 border-cafe-orange"></div>
+              <p className="mt-2 text-cafe-text-medium">Loading menu...</p>
+            </div>
+          )}
+
+          {error && (
+            <div className="text-center py-8">
+              <p className="text-red-600 mb-4">{error}</p>
+              <button 
+                onClick={() => window.location.reload()} 
+                className="px-4 py-2 bg-cafe-orange text-white rounded-lg hover:bg-cafe-brown transition-colors"
+              >
+                Retry
+              </button>
+            </div>
+          )}
+
+          {!loading && !error && (
+            <div className="grid grid-cols-2 gap-4 sm:gap-5 md:grid-cols-3 lg:grid-cols-4 xl:gap-6">
+              {currentMenuItems.map((item, index) => {
               const isVisible = visibleItems.has(item.id.toString());
               return (
                 <div key={item.id} className="w-full" data-item-id={item.id}>
@@ -204,6 +288,7 @@ export default function Index() {
               );
             })}
           </div>
+          )}
         </div>
       </div>
     </div>
