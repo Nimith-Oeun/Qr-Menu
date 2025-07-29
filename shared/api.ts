@@ -12,10 +12,36 @@ export interface DemoResponse {
 }
 
 /**
- * Menu item interface
+ * Spring Boot API Response wrapper
+ */
+export interface ApiResponse<T> {
+  success: boolean;
+  data: T;
+  message: string;
+  timestamp: string;
+}
+
+/**
+ * Menu item interface (matching Spring Boot MenuItem entity)
  */
 export interface MenuItem {
-  id: string;
+  id: number;
+  name: string;
+  size: string;
+  price: string;
+  image?: string;
+  category: 'DRINK' | 'FOOD';
+  description?: string;
+  isActive: boolean;
+  createdAt?: string;
+  updatedAt?: string;
+}
+
+/**
+ * Frontend display item (converted from Spring Boot format)
+ */
+export interface DisplayMenuItem {
+  id: number;
   name: string;
   size: string;
   price: string;
@@ -32,9 +58,33 @@ export interface MenuResponse {
 }
 
 /**
- * API response for menu items by category
+ * API response for menu items by category (Spring Boot format)
  */
 export interface MenuByCategoryResponse {
   drinks: MenuItem[];
   foods: MenuItem[];
+}
+
+/**
+ * Create item request
+ */
+export interface CreateItemRequest {
+  name: string;
+  size: string;
+  price: string;
+  image?: string;
+  category: 'DRINK' | 'FOOD';
+  description?: string;
+}
+
+/**
+ * Update item request
+ */
+export interface UpdateItemRequest {
+  name?: string;
+  size?: string;
+  price?: string;
+  image?: string;
+  category?: 'DRINK' | 'FOOD';
+  description?: string;
 }

@@ -1,7 +1,8 @@
-import { MenuResponse, MenuItem, MenuByCategoryResponse } from "@shared/api";
+import { MenuResponse, MenuItem, MenuByCategoryResponse, ApiResponse, CreateItemRequest, UpdateItemRequest } from "@shared/api";
+import { extractApiData, transformMenuItems, transformMenuItem } from "./apiTransform";
 
-// Use relative URLs since the API is served by the same Vite dev server
-const API_BASE_URL = import.meta.env.VITE_API_URL || '';
+// Spring Boot backend URL
+const API_BASE_URL = import.meta.env.VITE_API_URL || 'http://localhost:8090';
 
 class ApiError extends Error {
   constructor(public status: number, message: string) {
@@ -49,39 +50,63 @@ async function fetchApi<T>(endpoint: string, options?: RequestInit): Promise<T> 
 }
 
 export const menuApi = {
-  // Test endpoint to verify API is working
-  test: (): Promise<any> => fetchApi('/api/test'),
+  // Test endpoint to verify Spring Boot API is working
+  test: async () => {
+    const response = await fetchApi<ApiResponse<MenuItem[]>>('/api/menu');
+    return extractApiData(response);
+  },
   
   // Get all menu items
-  getMenu: (): Promise<MenuResponse> => fetchApi('/api/menu'),
+  getMenu: async () => {
+    const response = await fetchApi<ApiResponse<MenuItem[]>>('/api/menu');
+    const items = extractApiData(response);
+    return transformMenuItems(items);
+  },
   
-  // Get menu items by category
-  getMenuByCategory: (category: 'drink' | 'food'): Promise<MenuResponse> => 
-    fetchApi(`/api/menu/${category}`),
+  // Get menu items by category (Spring Boot expects UPPERCASE)
+  getMenuByCategory: async (category: 'drink' | 'food') => {
+    const response = await fetchApi<ApiResponse<MenuItem[]>>(`/api/menu/${category.toUpperCase()}`);
+    const items = extractApiData(response);
+    return transformMenuItems(items);
+  },
   
   // Get drinks and foods separately
-  getMenuSeparated: (): Promise<MenuByCategoryResponse> => fetchApi('/api/menu-separated'),
+  getMenuSeparated: async () => {
+    const response = await fetchApi<ApiResponse<MenuByCategoryResponse>>('/api/menu-separated');
+    const data = extractApiData(response);
+    return {
+      drinks: transformMenuItems(data.drinks),
+      foods: transformMenuItems(data.foods),
+    };
+  },
   
   // Add a new menu item
-  addMenuItem: (item: Omit<MenuItem, 'id'>): Promise<MenuItem> => 
-    fetchApi('/api/items', {
+  addMenuItem: async (item: CreateItemRequest) => {
+    const response = await fetchApi<ApiResponse<MenuItem>>('/api/items', {
       method: 'POST',
       body: JSON.stringify(item),
-    }),
+    });
+    return extractApiData(response);
+  },
   
   // Update a menu item
-  updateMenuItem: (id: string, item: Omit<MenuItem, 'id'>): Promise<MenuItem> => 
-    fetchApi(`/api/items/${id}`, {
+  updateMenuItem: async (id: number, item: UpdateItemRequest) => {
+    const response = await fetchApi<ApiResponse<MenuItem>>(`/api/items/${id}`, {
       method: 'PUT',
       body: JSON.stringify(item),
-    }),
+    });
+    const menuItem = extractApiData(response);
+    return transformMenuItem(menuItem);
+  },
   
   // Delete a menu item
-  deleteMenuItem: (id: string): Promise<{ message: string; item: MenuItem }> => 
-    fetchApi(`/api/items/${id}`, {
+  deleteMenuItem: async (id: number) => {
+    const response = await fetchApi<ApiResponse<void>>(`/api/items/${id}`, {
       method: 'DELETE',
-    }),
+    });
+    return extractApiData(response);
+  },
 };
 
 export { ApiError };
-export type { MenuItem };
+export type { MenuItem, DisplayMenuItem, CreateItemRequest, UpdateItemRequest } from "@shared/api";

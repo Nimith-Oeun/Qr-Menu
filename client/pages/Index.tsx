@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-import { menuApi, MenuItem, ApiError } from "../lib/api";
+import { menuApi, DisplayMenuItem, ApiError } from "../lib/api";
 import ImageWithPlaceholder from "../components/ImageWithPlaceholder";
 
 export default function Index() {
@@ -8,7 +8,7 @@ export default function Index() {
   const [activeTab, setActiveTab] = useState("drink");
   const [isScrolled, setIsScrolled] = useState(false);
   const [visibleItems, setVisibleItems] = useState(new Set());
-  const [menuItems, setMenuItems] = useState<MenuItem[]>([]);
+  const [menuItems, setMenuItems] = useState<DisplayMenuItem[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
 
@@ -33,7 +33,7 @@ export default function Index() {
         });
         
         // Combine drinks and foods
-        const allItems: MenuItem[] = [...response.drinks, ...response.foods];
+        const allItems: DisplayMenuItem[] = [...response.drinks, ...response.foods];
         setMenuItems(allItems);
         
         console.log('✅ Menu loaded successfully:', allItems.length, 'total items');
@@ -49,10 +49,10 @@ export default function Index() {
         
         // Fallback to mock data
         console.log('🔄 Loading fallback mock data...');
-        const mockItems: MenuItem[] = [
+        const mockItems: DisplayMenuItem[] = [
           // Drinks
           ...Array.from({ length: 7 }, (_, i) => ({
-            id: `drink-${i + 1}`,
+            id: i + 1,
             name: `Coffee Drink ${i + 1}`,
             size: i % 2 === 0 ? "M" : "L",
             price: `${2 + (i % 3)}`,
@@ -62,7 +62,7 @@ export default function Index() {
           })),
           // Foods
           ...Array.from({ length: 8 }, (_, i) => ({
-            id: `food-${i + 1}`,
+            id: i + 8,
             name: `Food Item ${i + 1}`,
             size: i % 2 === 0 ? "M" : "L",
             price: `${4 + (i % 4)}`,
@@ -91,7 +91,7 @@ export default function Index() {
     try {
       console.log('🔄 Manual refresh triggered...');
       const response = await menuApi.getMenuSeparated();
-      const allItems: MenuItem[] = [...response.drinks, ...response.foods];
+      const allItems: DisplayMenuItem[] = [...response.drinks, ...response.foods];
       setMenuItems(allItems);
       console.log('✅ Menu refreshed successfully');
     } catch (err) {

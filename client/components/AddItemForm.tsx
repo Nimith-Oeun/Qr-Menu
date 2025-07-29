@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { MenuItem } from "../lib/api";
+import { CreateItemRequest } from "../lib/api";
 import ImageWithPlaceholder from "./ImageWithPlaceholder";
 import { Button } from "./ui/button";
 import { Input } from "./ui/input";
@@ -10,7 +10,7 @@ import { Card, CardContent, CardHeader, CardTitle } from "./ui/card";
 import { X } from "lucide-react";
 
 interface AddItemFormProps {
-  onSubmit: (item: Omit<MenuItem, 'id'>) => Promise<void>;
+  onSubmit: (item: CreateItemRequest) => Promise<void>;
   onCancel: () => void;
   isSubmitting: boolean;
 }
@@ -63,7 +63,7 @@ export default function AddItemForm({ onSubmit, onCancel, isSubmitting }: AddIte
         size: formData.size.trim(),
         price: formData.price.trim(),
         image: formData.image.trim() || undefined,
-        category: formData.category as 'drink' | 'food',
+        category: formData.category.toUpperCase() as 'DRINK' | 'FOOD',
         description: formData.description.trim() || undefined,
       });
 
