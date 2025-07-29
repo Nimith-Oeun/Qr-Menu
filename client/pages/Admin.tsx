@@ -6,18 +6,53 @@ import { Button } from "../components/ui/button";
 import { Input } from "../components/ui/input";
 import { Label } from "../components/ui/label";
 import { Textarea } from "../components/ui/textarea";
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "../components/ui/select";
-import { Card, CardContent, CardHeader, CardTitle } from "../components/ui/card";
-import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from "../components/ui/dialog";
-import { AlertDialog, AlertDialogAction, AlertDialogCancel, AlertDialogContent, AlertDialogDescription, AlertDialogFooter, AlertDialogHeader, AlertDialogTitle, AlertDialogTrigger } from "../components/ui/alert-dialog";
-import { ArrowLeft, Plus, Edit, Trash2, Eye, Coffee, UtensilsCrossed } from "lucide-react";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "../components/ui/select";
+import {
+  Card,
+  CardContent,
+  CardHeader,
+  CardTitle,
+} from "../components/ui/card";
+import {
+  Dialog,
+  DialogContent,
+  DialogHeader,
+  DialogTitle,
+  DialogTrigger,
+} from "../components/ui/dialog";
+import {
+  AlertDialog,
+  AlertDialogAction,
+  AlertDialogCancel,
+  AlertDialogContent,
+  AlertDialogDescription,
+  AlertDialogFooter,
+  AlertDialogHeader,
+  AlertDialogTitle,
+  AlertDialogTrigger,
+} from "../components/ui/alert-dialog";
+import {
+  ArrowLeft,
+  Plus,
+  Edit,
+  Trash2,
+  Eye,
+  Coffee,
+  UtensilsCrossed,
+} from "lucide-react";
 
 interface EditFormData {
   name: string;
   size: string;
   price: string;
   image: string;
-  category: 'drink' | 'food' | '';
+  category: "drink" | "food" | "";
   description: string;
 }
 
@@ -26,17 +61,19 @@ export default function Admin() {
   const [menuItems, setMenuItems] = useState<MenuItem[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
-  const [activeFilter, setActiveFilter] = useState<'all' | 'drink' | 'food'>('all');
-  
+  const [activeFilter, setActiveFilter] = useState<"all" | "drink" | "food">(
+    "all",
+  );
+
   // Edit modal state
   const [editingItem, setEditingItem] = useState<MenuItem | null>(null);
   const [editFormData, setEditFormData] = useState<EditFormData>({
-    name: '',
-    size: '',
-    price: '',
-    image: '',
-    category: '',
-    description: '',
+    name: "",
+    size: "",
+    price: "",
+    image: "",
+    category: "",
+    description: "",
   });
   const [isUpdating, setIsUpdating] = useState(false);
   const [editErrors, setEditErrors] = useState<Record<string, string>>({});
@@ -47,17 +84,19 @@ export default function Admin() {
       try {
         setLoading(true);
         setError(null);
-        
+
         const response = await menuApi.getMenuSeparated();
         const allItems: MenuItem[] = [...response.drinks, ...response.foods];
         setMenuItems(allItems);
-        console.log('Admin menu data loaded:', allItems.length, 'items');
+        console.log("Admin menu data loaded:", allItems.length, "items");
       } catch (err) {
-        console.error('Failed to fetch menu:', err);
+        console.error("Failed to fetch menu:", err);
         if (err instanceof ApiError) {
-          setError(`Failed to load menu: ${err.message} (Status: ${err.status})`);
+          setError(
+            `Failed to load menu: ${err.message} (Status: ${err.status})`,
+          );
         } else {
-          setError('Failed to load menu. Please try again later.');
+          setError("Failed to load menu. Please try again later.");
         }
       } finally {
         setLoading(false);
@@ -68,15 +107,15 @@ export default function Admin() {
   }, []);
 
   // Filter items based on active filter
-  const filteredItems = menuItems.filter(item => 
-    activeFilter === 'all' || item.category === activeFilter
+  const filteredItems = menuItems.filter(
+    (item) => activeFilter === "all" || item.category === activeFilter,
   );
 
   // Stats
   const stats = {
     total: menuItems.length,
-    drinks: menuItems.filter(item => item.category === 'drink').length,
-    foods: menuItems.filter(item => item.category === 'food').length,
+    drinks: menuItems.filter((item) => item.category === "drink").length,
+    foods: menuItems.filter((item) => item.category === "food").length,
   };
 
   // Open edit dialog
@@ -86,18 +125,18 @@ export default function Admin() {
       name: item.name,
       size: item.size,
       price: item.price,
-      image: item.image || '',
+      image: item.image || "",
       category: item.category,
-      description: item.description || '',
+      description: item.description || "",
     });
     setEditErrors({});
   };
 
   // Handle edit form changes
   const handleEditInputChange = (field: string, value: string) => {
-    setEditFormData(prev => ({ ...prev, [field]: value }));
+    setEditFormData((prev) => ({ ...prev, [field]: value }));
     if (editErrors[field]) {
-      setEditErrors(prev => ({ ...prev, [field]: '' }));
+      setEditErrors((prev) => ({ ...prev, [field]: "" }));
     }
   };
 
@@ -128,29 +167,32 @@ export default function Admin() {
 
     try {
       setIsUpdating(true);
-      
+
       const updatedItem = await menuApi.updateMenuItem(editingItem.id, {
         name: editFormData.name.trim(),
         size: editFormData.size.trim(),
         price: editFormData.price.trim(),
         image: editFormData.image.trim() || undefined,
-        category: editFormData.category as 'drink' | 'food',
+        category: editFormData.category as "drink" | "food",
         description: editFormData.description.trim() || undefined,
       });
 
       // Update local state
-      setMenuItems(prev => prev.map(item => 
-        item.id === editingItem.id ? updatedItem : item
-      ));
-      
+      setMenuItems((prev) =>
+        prev.map((item) => (item.id === editingItem.id ? updatedItem : item)),
+      );
+
       setEditingItem(null);
-      console.log('Item updated successfully:', updatedItem);
+      setError(null);
+      console.log("Item updated successfully:", updatedItem);
     } catch (err) {
-      console.error('Failed to update item:', err);
+      console.error("Failed to update item:", err);
       if (err instanceof ApiError) {
-        setError(`Failed to update item: ${err.message} (Status: ${err.status})`);
+        setError(
+          `Failed to update item: ${err.message} (Status: ${err.status})`,
+        );
       } else {
-        setError('Failed to update item. Please try again later.');
+        setError("Failed to update item. Please try again later.");
       }
     } finally {
       setIsUpdating(false);
@@ -161,16 +203,18 @@ export default function Admin() {
   const handleDelete = async (item: MenuItem) => {
     try {
       await menuApi.deleteMenuItem(item.id);
-      
+
       // Update local state
-      setMenuItems(prev => prev.filter(i => i.id !== item.id));
-      console.log('Item deleted successfully:', item);
+      setMenuItems((prev) => prev.filter((i) => i.id !== item.id));
+      console.log("Item deleted successfully:", item);
     } catch (err) {
-      console.error('Failed to delete item:', err);
+      console.error("Failed to delete item:", err);
       if (err instanceof ApiError) {
-        setError(`Failed to delete item: ${err.message} (Status: ${err.status})`);
+        setError(
+          `Failed to delete item: ${err.message} (Status: ${err.status})`,
+        );
       } else {
-        setError('Failed to delete item. Please try again later.');
+        setError("Failed to delete item. Please try again later.");
       }
     }
   };
@@ -228,8 +272,12 @@ export default function Admin() {
             <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 mb-6">
               <Card>
                 <CardContent className="p-4 text-center">
-                  <div className="text-2xl font-bold text-cafe-text-dark">{stats.total}</div>
-                  <div className="text-sm text-cafe-text-medium">Total Items</div>
+                  <div className="text-2xl font-bold text-cafe-text-dark">
+                    {stats.total}
+                  </div>
+                  <div className="text-sm text-cafe-text-medium">
+                    Total Items
+                  </div>
                 </CardContent>
               </Card>
               <Card>
@@ -256,31 +304,31 @@ export default function Admin() {
             <div className="flex justify-center mb-6">
               <div className="bg-cafe-bg-light rounded-[20px] p-1">
                 <button
-                  onClick={() => setActiveFilter('all')}
+                  onClick={() => setActiveFilter("all")}
                   className={`px-6 py-2 rounded-[16px] font-medium transition-all ${
-                    activeFilter === 'all'
-                      ? 'bg-cafe-orange text-white shadow-md'
-                      : 'text-cafe-text-dark hover:bg-white/50'
+                    activeFilter === "all"
+                      ? "bg-cafe-orange text-white shadow-md"
+                      : "text-cafe-text-dark hover:bg-white/50"
                   }`}
                 >
                   All Items
                 </button>
                 <button
-                  onClick={() => setActiveFilter('drink')}
+                  onClick={() => setActiveFilter("drink")}
                   className={`px-6 py-2 rounded-[16px] font-medium transition-all ${
-                    activeFilter === 'drink'
-                      ? 'bg-cafe-orange text-white shadow-md'
-                      : 'text-cafe-text-dark hover:bg-white/50'
+                    activeFilter === "drink"
+                      ? "bg-cafe-orange text-white shadow-md"
+                      : "text-cafe-text-dark hover:bg-white/50"
                   }`}
                 >
                   Drinks
                 </button>
                 <button
-                  onClick={() => setActiveFilter('food')}
+                  onClick={() => setActiveFilter("food")}
                   className={`px-6 py-2 rounded-[16px] font-medium transition-all ${
-                    activeFilter === 'food'
-                      ? 'bg-cafe-orange text-white shadow-md'
-                      : 'text-cafe-text-dark hover:bg-white/50'
+                    activeFilter === "food"
+                      ? "bg-cafe-orange text-white shadow-md"
+                      : "text-cafe-text-dark hover:bg-white/50"
                   }`}
                 >
                   Foods
@@ -293,10 +341,10 @@ export default function Admin() {
               <div className="bg-red-50 border border-red-200 text-red-800 px-4 py-3 rounded-lg mb-6">
                 <p className="font-medium">Error</p>
                 <p className="text-sm">{error}</p>
-                <Button 
-                  onClick={() => setError(null)} 
-                  variant="ghost" 
-                  size="sm" 
+                <Button
+                  onClick={() => setError(null)}
+                  variant="ghost"
+                  size="sm"
                   className="mt-2"
                 >
                   Dismiss
@@ -316,7 +364,10 @@ export default function Admin() {
             {!loading && (
               <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4">
                 {filteredItems.map((item) => (
-                  <Card key={item.id} className="overflow-hidden hover:shadow-lg transition-shadow">
+                  <Card
+                    key={item.id}
+                    className="overflow-hidden hover:shadow-lg transition-shadow"
+                  >
                     <div className="aspect-[174/119] overflow-hidden relative">
                       <ImageWithPlaceholder
                         src={item.image}
@@ -335,7 +386,7 @@ export default function Admin() {
                           Size: {item.size}
                         </p>
                         <p className="text-sm text-cafe-text-medium">
-                          Price: {item.price}
+                          Price: {item.price}$
                         </p>
                         <p className="text-xs text-cafe-text-light capitalize">
                           Category: {item.category}
@@ -346,7 +397,7 @@ export default function Admin() {
                           </p>
                         )}
                       </div>
-                      
+
                       {/* Action Buttons */}
                       <div className="flex gap-2">
                         <Dialog>
@@ -361,121 +412,191 @@ export default function Admin() {
                               Edit
                             </Button>
                           </DialogTrigger>
-                          <DialogContent className="max-w-md max-h-[90vh] overflow-y-auto">
-                            <DialogHeader>
-                              <DialogTitle>Edit Menu Item</DialogTitle>
-                            </DialogHeader>
-                            <div className="space-y-4">
-                              <div>
-                                <Label htmlFor="edit-name">Name *</Label>
-                                <Input
-                                  id="edit-name"
-                                  value={editFormData.name}
-                                  onChange={(e) => handleEditInputChange("name", e.target.value)}
-                                  disabled={isUpdating}
-                                  className={editErrors.name ? "border-red-500" : ""}
-                                />
-                                {editErrors.name && <p className="text-red-500 text-xs mt-1">{editErrors.name}</p>}
-                              </div>
+                          {editingItem && (
+                            <DialogContent className="max-w-md max-h-[90vh] overflow-y-auto">
+                              <DialogHeader>
+                                <DialogTitle>Edit Menu Item</DialogTitle>
+                              </DialogHeader>
+                              {isUpdating && (
+                                <div className="bg-green-50 border border-green-200 text-green-800 px-4 py-3 rounded-lg mb-4">
+                                  <p className="font-medium">
+                                    Item updated successfully!
+                                  </p>
+                                </div>
+                              )}
+                              <div className="space-y-4">
+                                <div>
+                                  <Label htmlFor="edit-name">Name *</Label>
+                                  <Input
+                                    id="edit-name"
+                                    value={editFormData.name}
+                                    onChange={(e) =>
+                                      handleEditInputChange(
+                                        "name",
+                                        e.target.value,
+                                      )
+                                    }
+                                    disabled={isUpdating}
+                                    className={
+                                      editErrors.name ? "border-red-500" : ""
+                                    }
+                                  />
+                                  {editErrors.name && (
+                                    <p className="text-red-500 text-xs mt-1">
+                                      {editErrors.name}
+                                    </p>
+                                  )}
+                                </div>
 
-                              <div>
-                                <Label htmlFor="edit-category">Category *</Label>
-                                <Select
-                                  value={editFormData.category}
-                                  onValueChange={(value) => handleEditInputChange("category", value)}
-                                  disabled={isUpdating}
-                                >
-                                  <SelectTrigger className={editErrors.category ? "border-red-500" : ""}>
-                                    <SelectValue placeholder="Select category" />
-                                  </SelectTrigger>
-                                  <SelectContent>
-                                    <SelectItem value="drink">Drink</SelectItem>
-                                    <SelectItem value="food">Food</SelectItem>
-                                  </SelectContent>
-                                </Select>
-                                {editErrors.category && <p className="text-red-500 text-xs mt-1">{editErrors.category}</p>}
-                              </div>
-
-                              <div>
-                                <Label htmlFor="edit-size">Size *</Label>
-                                <Input
-                                  id="edit-size"
-                                  value={editFormData.size}
-                                  onChange={(e) => handleEditInputChange("size", e.target.value)}
-                                  disabled={isUpdating}
-                                  className={editErrors.size ? "border-red-500" : ""}
-                                />
-                                {editErrors.size && <p className="text-red-500 text-xs mt-1">{editErrors.size}</p>}
-                              </div>
-
-                              <div>
-                                <Label htmlFor="edit-price">Price *</Label>
-                                <Input
-                                  id="edit-price"
-                                  value={editFormData.price}
-                                  onChange={(e) => handleEditInputChange("price", e.target.value)}
-                                  disabled={isUpdating}
-                                  className={editErrors.price ? "border-red-500" : ""}
-                                />
-                                {editErrors.price && <p className="text-red-500 text-xs mt-1">{editErrors.price}</p>}
-                              </div>
-
-                              <div>
-                                <Label htmlFor="edit-image">Image URL</Label>
-                                <Input
-                                  id="edit-image"
-                                  value={editFormData.image}
-                                  onChange={(e) => handleEditInputChange("image", e.target.value)}
-                                  disabled={isUpdating}
-                                />
-                                
-                                {/* Image Preview */}
-                                <div className="mt-3">
-                                  <Label className="text-sm font-medium text-cafe-text-dark mb-2 block">
-                                    Preview
+                                <div>
+                                  <Label htmlFor="edit-category">
+                                    Category *
                                   </Label>
-                                  <div className="w-32 h-24 border border-gray-200 rounded-lg overflow-hidden">
-                                    <ImageWithPlaceholder
-                                      src={editFormData.image}
-                                      alt="Preview"
-                                      category={editFormData.category || 'drink'}
-                                      isVisible={true}
-                                      className="w-full h-full"
-                                    />
+                                  <Select
+                                    value={editFormData.category}
+                                    onValueChange={(value) =>
+                                      handleEditInputChange("category", value)
+                                    }
+                                    disabled={isUpdating}
+                                  >
+                                    <SelectTrigger
+                                      className={
+                                        editErrors.category
+                                          ? "border-red-500"
+                                          : ""
+                                      }
+                                    >
+                                      <SelectValue placeholder="Select category" />
+                                    </SelectTrigger>
+                                    <SelectContent>
+                                      <SelectItem value="drink">Drink</SelectItem>
+                                      <SelectItem value="food">Food</SelectItem>
+                                    </SelectContent>
+                                  </Select>
+                                  {editErrors.category && (
+                                    <p className="text-red-500 text-xs mt-1">
+                                      {editErrors.category}
+                                    </p>
+                                  )}
+                                </div>
+
+                                <div>
+                                  <Label htmlFor="edit-size">Size *</Label>
+                                  <Input
+                                    id="edit-size"
+                                    value={editFormData.size}
+                                    onChange={(e) =>
+                                      handleEditInputChange(
+                                        "size",
+                                        e.target.value,
+                                      )
+                                    }
+                                    disabled={isUpdating}
+                                    className={
+                                      editErrors.size ? "border-red-500" : ""
+                                    }
+                                  />
+                                  {editErrors.size && (
+                                    <p className="text-red-500 text-xs mt-1">
+                                      {editErrors.size}
+                                    </p>
+                                  )}
+                                </div>
+
+                                <div>
+                                  <Label htmlFor="edit-price">Price *</Label>
+                                  <Input
+                                    id="edit-price"
+                                    value={editFormData.price}
+                                    onChange={(e) =>
+                                      handleEditInputChange(
+                                        "price",
+                                        e.target.value,
+                                      )
+                                    }
+                                    disabled={isUpdating}
+                                    className={
+                                      editErrors.price ? "border-red-500" : ""
+                                    }
+                                  />
+                                  {editErrors.price && (
+                                    <p className="text-red-500 text-xs mt-1">
+                                      {editErrors.price}
+                                    </p>
+                                  )}
+                                </div>
+
+                                <div>
+                                  <Label htmlFor="edit-image">Image URL</Label>
+                                  <Input
+                                    id="edit-image"
+                                    value={editFormData.image}
+                                    onChange={(e) =>
+                                      handleEditInputChange(
+                                        "image",
+                                        e.target.value,
+                                      )
+                                    }
+                                    disabled={isUpdating}
+                                  />
+
+                                  {/* Image Preview */}
+                                  <div className="mt-3">
+                                    <Label className="text-sm font-medium text-cafe-text-dark mb-2 block">
+                                      Preview
+                                    </Label>
+                                    <div className="w-32 h-24 border border-gray-200 rounded-lg overflow-hidden">
+                                      <ImageWithPlaceholder
+                                        src={editFormData.image}
+                                        alt="Preview"
+                                        category={
+                                          editFormData.category || "drink"
+                                        }
+                                        isVisible={true}
+                                        className="w-full h-full"
+                                      />
+                                    </div>
                                   </div>
                                 </div>
-                              </div>
 
-                              <div>
-                                <Label htmlFor="edit-description">Description</Label>
-                                <Textarea
-                                  id="edit-description"
-                                  value={editFormData.description}
-                                  onChange={(e) => handleEditInputChange("description", e.target.value)}
-                                  disabled={isUpdating}
-                                  rows={3}
-                                />
-                              </div>
+                                <div>
+                                  <Label htmlFor="edit-description">
+                                    Description
+                                  </Label>
+                                  <Textarea
+                                    id="edit-description"
+                                    value={editFormData.description}
+                                    onChange={(e) =>
+                                      handleEditInputChange(
+                                        "description",
+                                        e.target.value,
+                                      )
+                                    }
+                                    disabled={isUpdating}
+                                    rows={3}
+                                  />
+                                </div>
 
-                              <div className="flex gap-3 pt-4">
-                                <Button
-                                  variant="outline"
-                                  onClick={() => setEditingItem(null)}
-                                  disabled={isUpdating}
-                                  className="flex-1"
-                                >
-                                  Cancel
-                                </Button>
-                                <Button
-                                  onClick={handleUpdate}
-                                  disabled={isUpdating}
-                                  className="flex-1 bg-cafe-orange hover:bg-cafe-brown"
-                                >
-                                  {isUpdating ? "Updating..." : "Update"}
-                                </Button>
+                                <div className="flex gap-3 pt-4">
+                                  <Button
+                                    variant="outline"
+                                    onClick={() => setEditingItem(null)}
+                                    disabled={isUpdating}
+                                    className="flex-1"
+                                  >
+                                    Cancel
+                                  </Button>
+                                  <Button
+                                    onClick={handleUpdate}
+                                    disabled={isUpdating}
+                                    className="flex-1 bg-cafe-orange hover:bg-cafe-brown"
+                                  >
+                                    {isUpdating ? "Updating..." : "Update"}
+                                  </Button>
+                                </div>
                               </div>
-                            </div>
-                          </DialogContent>
+                            </DialogContent>
+                          )}
                         </Dialog>
 
                         <AlertDialog>
@@ -491,9 +612,12 @@ export default function Admin() {
                           </AlertDialogTrigger>
                           <AlertDialogContent>
                             <AlertDialogHeader>
-                              <AlertDialogTitle>Delete Menu Item</AlertDialogTitle>
+                              <AlertDialogTitle>
+                                Delete Menu Item
+                              </AlertDialogTitle>
                               <AlertDialogDescription>
-                                Are you sure you want to delete "{item.name}"? This action cannot be undone.
+                                Are you sure you want to delete "{item.name}"?
+                                This action cannot be undone.
                               </AlertDialogDescription>
                             </AlertDialogHeader>
                             <AlertDialogFooter>
@@ -518,22 +642,22 @@ export default function Admin() {
             {!loading && filteredItems.length === 0 && (
               <div className="text-center py-12">
                 <div className="text-cafe-text-light mb-4">
-                  {activeFilter === 'all' ? (
+                  {activeFilter === "all" ? (
                     <Plus className="h-16 w-16 mx-auto" />
-                  ) : activeFilter === 'drink' ? (
+                  ) : activeFilter === "drink" ? (
                     <Coffee className="h-16 w-16 mx-auto" />
                   ) : (
                     <UtensilsCrossed className="h-16 w-16 mx-auto" />
                   )}
                 </div>
                 <h3 className="text-xl font-medium text-cafe-text-dark mb-2">
-                  No {activeFilter === 'all' ? 'items' : activeFilter + 's'} found
+                  No {activeFilter === "all" ? "items" : activeFilter + "s"}{" "}
+                  found
                 </h3>
                 <p className="text-cafe-text-medium mb-4">
-                  {activeFilter === 'all' 
+                  {activeFilter === "all"
                     ? "Start by adding your first menu item."
-                    : `No ${activeFilter}s have been added yet.`
-                  }
+                    : `No ${activeFilter}s have been added yet.`}
                 </p>
                 <Button
                   onClick={() => navigate("/qr-menu-chhong_caffe/create-item")}

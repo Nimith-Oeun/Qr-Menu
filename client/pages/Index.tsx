@@ -12,72 +12,97 @@ export default function Index() {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
 
-  useEffect(() => {
-    const handleScroll = () => {
-      setIsScrolled(window.scrollY > 50);
-    };
-
-    window.addEventListener("scroll", handleScroll);
-    return () => window.removeEventListener("scroll", handleScroll);
-  }, []);
-
-  // Fetch menu data from API
+  // Auto-fetch menu data when component mounts
   useEffect(() => {
     const fetchMenuData = async () => {
       try {
         setLoading(true);
         setError(null);
         
-        // First test API connectivity
-        console.log('Testing API connectivity...');
+        console.log('🔄 Auto-fetching menu data...');
+        
+        // Test API connectivity first
         await menuApi.test();
-        console.log('API test successful, fetching menu...');
+        console.log('✅ API connectivity test successful');
         
+        // Fetch menu data
         const response = await menuApi.getMenuSeparated();
+        console.log('📋 Menu data fetched:', { 
+          drinks: response.drinks.length, 
+          foods: response.foods.length 
+        });
         
-        // Combine drinks and foods with proper typing
+        // Combine drinks and foods
         const allItems: MenuItem[] = [...response.drinks, ...response.foods];
         setMenuItems(allItems);
-        console.log('Menu data loaded successfully:', allItems.length, 'items');
+        
+        console.log('✅ Menu loaded successfully:', allItems.length, 'total items');
+        
       } catch (err) {
-        console.error('Failed to fetch menu:', err);
+        console.error('❌ Failed to fetch menu:', err);
+        
         if (err instanceof ApiError) {
           setError(`Failed to load menu: ${err.message} (Status: ${err.status})`);
         } else {
-          setError('Failed to load menu. Please try again later.');
+          setError('Failed to load menu. Please check your connection.');
         }
         
-        // Fallback to mock data if API fails
-        console.log('Using fallback mock data...');
+        // Fallback to mock data
+        console.log('🔄 Loading fallback mock data...');
         const mockItems: MenuItem[] = [
           // Drinks
           ...Array.from({ length: 7 }, (_, i) => ({
             id: `drink-${i + 1}`,
-            name: `Drink ${i + 1}`,
+            name: `Coffee Drink ${i + 1}`,
             size: i % 2 === 0 ? "M" : "L",
-            price: `${2 + (i % 3)}$`,
+            price: `${2 + (i % 3)}`,
             image: "https://api.builder.io/api/v1/image/assets/TEMP/2e811b0fa84092c929b579286fded5e620c45c19?width=347",
             category: 'drink' as const,
+            description: `Delicious coffee drink #${i + 1}`
           })),
           // Foods
           ...Array.from({ length: 8 }, (_, i) => ({
             id: `food-${i + 1}`,
-            name: `Food ${i + 1}`,
+            name: `Food Item ${i + 1}`,
             size: i % 2 === 0 ? "M" : "L",
-            price: `${4 + (i % 4)}$`,
+            price: `${4 + (i % 4)}`,
             image: "https://api.builder.io/api/v1/image/assets/TEMP/977e1ee7cf4be018cd9e90c67e54df15c36e50b0?width=347",
             category: 'food' as const,
+            description: `Tasty food item #${i + 1}`
           })),
         ];
         setMenuItems(mockItems);
+        console.log('📋 Mock data loaded:', mockItems.length, 'items');
+        
       } finally {
         setLoading(false);
       }
     };
 
+    // Auto-fetch immediately when component mounts
     fetchMenuData();
-  }, []);
+  }, []); // Empty dependency array ensures this runs only once when component mounts
 
+  // Manual refresh function
+  const refreshMenu = async () => {
+    setLoading(true);
+    setError(null);
+    
+    try {
+      console.log('🔄 Manual refresh triggered...');
+      const response = await menuApi.getMenuSeparated();
+      const allItems: MenuItem[] = [...response.drinks, ...response.foods];
+      setMenuItems(allItems);
+      console.log('✅ Menu refreshed successfully');
+    } catch (err) {
+      console.error('❌ Manual refresh failed:', err);
+      setError('Failed to refresh menu');
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  // Scroll handler
   useEffect(() => {
     const handleScroll = () => {
       setIsScrolled(window.scrollY > 50);
@@ -87,6 +112,7 @@ export default function Index() {
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
+  // Intersection observer for animations
   useEffect(() => {
     const items = document.querySelectorAll("[data-item-id]");
   
@@ -117,8 +143,9 @@ export default function Index() {
     items.forEach((item) => observer.observe(item));
   
     return () => observer.disconnect();
-  }, [activeTab]);
-    // Filter items based on active tab
+  }, [activeTab, menuItems]); // Added menuItems to dependencies
+
+  // Filter items based on active tab
   const currentMenuItems = menuItems.filter(item => item.category === activeTab);
 
   return (
@@ -150,7 +177,7 @@ export default function Index() {
         </div>
 
         {isScrolled && (
-          <div className="h-1 bg-gradient-to-r from-cafe-orange via-cafe-brown to-cafe-orange animate-pulse h-100px"></div>
+          <div className="h-1 bg-gradient-to-r from-cafe-orange via-cafe-brown to-cafe-orange animate-pulse"></div>
         )}
 
         <h1
@@ -201,14 +228,26 @@ export default function Index() {
           </div>
         </div>
 
-        {/* Add Item Button */}
-        {/* <div className="flex justify-center mt-4">
+        {/* Admin Controls
+        <div className="flex justify-center gap-2 mt-4 px-4">
           <button
             onClick={() => navigate("/qr-menu-chhong_caffe/create-item")}
-            className="flex items-center gap-2 px-4 py-2 bg-cafe-orange text-white rounded-lg hover:bg-cafe-brown transition-all duration-300 shadow-lg hover:shadow-xl"
+            className="px-3 py-2 bg-cafe-orange text-white rounded-lg hover:bg-cafe-brown transition-all duration-300 shadow-md hover:shadow-lg text-sm"
           >
-            <Plus className="h-4 w-4" />
-            Add New Item
+            ➕ Add Item
+          </button>
+          <button
+            onClick={() => navigate("/qr-menu-chhong_caffe/admin")}
+            className="px-3 py-2 bg-cafe-brown text-white rounded-lg hover:bg-cafe-orange transition-all duration-300 shadow-md hover:shadow-lg text-sm"
+          >
+            ⚙️ Admin
+          </button>
+          <button
+            onClick={refreshMenu}
+            disabled={loading}
+            className="px-3 py-2 bg-green-600 text-white rounded-lg hover:bg-green-700 transition-all duration-300 shadow-md hover:shadow-lg text-sm disabled:opacity-50"
+          >
+            {loading ? "🔄" : "🔄"} Refresh
           </button>
         </div> */}
       </div>
@@ -222,23 +261,43 @@ export default function Index() {
           {loading && (
             <div className="text-center py-8">
               <div className="inline-block animate-spin rounded-full h-8 w-8 border-b-2 border-cafe-orange"></div>
-              <p className="mt-2 text-cafe-text-medium">Loading menu...</p>
+              <p className="mt-2 text-cafe-text-medium">🔄 Loading fresh menu data...</p>
             </div>
           )}
 
           {error && (
+            <div className="text-center py-8 bg-red-50 rounded-lg p-4 mx-4">
+              <p className="text-red-600 mb-4">⚠️ {error}</p>
+              <div className="flex justify-center gap-2">
+                <button 
+                  onClick={refreshMenu} 
+                  className="px-4 py-2 bg-cafe-orange text-white rounded-lg hover:bg-cafe-brown transition-colors"
+                >
+                  🔄 Retry
+                </button>
+                <button 
+                  onClick={() => setError(null)} 
+                  className="px-4 py-2 bg-gray-500 text-white rounded-lg hover:bg-gray-600 transition-colors"
+                >
+                  ✖️ Dismiss
+                </button>
+              </div>
+            </div>
+          )}
+
+          {!loading && !error && currentMenuItems.length === 0 && (
             <div className="text-center py-8">
-              <p className="text-red-600 mb-4">{error}</p>
-              <button 
-                onClick={() => window.location.reload()} 
+              <p className="text-cafe-text-medium mb-4">📭 No {activeTab}s available</p>
+              <button
+                onClick={() => navigate("/qr-menu-chhong_caffe/create-item")}
                 className="px-4 py-2 bg-cafe-orange text-white rounded-lg hover:bg-cafe-brown transition-colors"
               >
-                Retry
+                ➕ Add First {activeTab}
               </button>
             </div>
           )}
 
-          {!loading && !error && (
+          {!loading && !error && currentMenuItems.length > 0 && (
             <div className="grid grid-cols-2 gap-4 sm:gap-5 md:grid-cols-3 lg:grid-cols-4 xl:gap-6">
               {currentMenuItems.map((item, index) => {
               const isVisible = visibleItems.has(item.id.toString());
@@ -287,8 +346,13 @@ export default function Index() {
                           size : {item.size}
                         </p>
                         <p className="font-poppins font-bold text-sm sm:text-base text-cafe-text-medium">
-                          price : {item.price}
+                          price : {item.price}$
                         </p>
+                        {item.description && (
+                          <p className="font-poppins text-xs text-cafe-text-light opacity-75">
+                            {item.description}
+                          </p>
+                        )}
                       </div>
                     </div>
                     {isVisible && (
