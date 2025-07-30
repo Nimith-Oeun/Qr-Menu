@@ -8,7 +8,7 @@ let mockMenuItems: MenuItem[] = [
     id: `drink-${i + 1}`,
     name: `Drink ${i + 1}`,
     size: i % 2 === 0 ? "M" : "L",
-    price: `${2 + (i % 3)}$`,
+    price: `${2 + (i % 3)}`,
     image: "https://api.builder.io/api/v1/image/assets/TEMP/2e811b0fa84092c929b579286fded5e620c45c19?width=347",
     category: 'drink' as const,
   })),
@@ -17,7 +17,7 @@ let mockMenuItems: MenuItem[] = [
     id: `food-${i + 1}`,
     name: `Food ${i + 1}`,
     size: i % 2 === 0 ? "M" : "L",
-    price: `${4 + (i % 4)}$`,
+    price: `${4 + (i % 4)}`,
     image: "https://api.builder.io/api/v1/image/assets/TEMP/977e1ee7cf4be018cd9e90c67e54df15c36e50b0?width=347",
     category: 'food' as const,
   })),
@@ -137,5 +137,81 @@ export const handleAddMenuItem: RequestHandler = async (req, res) => {
   } catch (error) {
     console.error('Error adding menu item:', error);
     res.status(500).json({ error: 'Failed to add menu item' });
+  }
+};
+
+// Update a menu item
+export const handleUpdateMenuItem: RequestHandler = async (req, res) => {
+  try {
+    console.log('handleUpdateMenuItem called with params:', req.params, 'body:', req.body); // Debug log
+    
+    const { id } = req.params;
+    const { name, size, price, image, category, description } = req.body;
+    
+    // Find the item to update
+    const itemIndex = mockMenuItems.findIndex(item => item.id === id);
+    if (itemIndex === -1) {
+      return res.status(404).json({ error: 'Menu item not found' });
+    }
+    
+    // Validate required fields
+    if (!name || !size || !price || !category) {
+      return res.status(400).json({ 
+        error: 'Missing required fields. Name, size, price, and category are required.' 
+      });
+    }
+    
+    // Validate category
+    if (!['drink', 'food'].includes(category)) {
+      return res.status(400).json({ 
+        error: 'Invalid category. Must be "drink" or "food"' 
+      });
+    }
+    
+    // Update the item
+    const updatedItem: MenuItem = {
+      id,
+      name: name.trim(),
+      size: size.trim(),
+      price: price.trim(),
+      image: image || (category === 'drink' 
+        ? "https://api.builder.io/api/v1/image/assets/TEMP/2e811b0fa84092c929b579286fded5e620c45c19?width=347"
+        : "https://api.builder.io/api/v1/image/assets/TEMP/977e1ee7cf4be018cd9e90c67e54df15c36e50b0?width=347"),
+      category: category as 'drink' | 'food',
+      description: description?.trim() || undefined,
+    };
+    
+    // Update in mock data (TODO: Replace with actual database call)
+    mockMenuItems[itemIndex] = updatedItem;
+    
+    console.log('Item updated:', updatedItem); // Debug log
+    res.status(200).json(updatedItem);
+  } catch (error) {
+    console.error('Error updating menu item:', error);
+    res.status(500).json({ error: 'Failed to update menu item' });
+  }
+};
+
+// Delete a menu item
+export const handleDeleteMenuItem: RequestHandler = async (req, res) => {
+  try {
+    console.log('handleDeleteMenuItem called with params:', req.params); // Debug log
+    
+    const { id } = req.params;
+    
+    // Find the item to delete
+    const itemIndex = mockMenuItems.findIndex(item => item.id === id);
+    if (itemIndex === -1) {
+      return res.status(404).json({ error: 'Menu item not found' });
+    }
+    
+    // Remove from mock data (TODO: Replace with actual database call)
+    const deletedItem = mockMenuItems.splice(itemIndex, 1)[0];
+    
+    console.log('Item deleted:', deletedItem); // Debug log
+    res.status(200).json({ message: 'Menu item deleted successfully', item: deletedItem });
+  } catch (error) {
+    console.error('Error deleting menu item:', error);
+    res.status(500).json({ error: 'Failed to delete menu item' });
   }
 };

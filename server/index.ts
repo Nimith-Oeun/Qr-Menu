@@ -1,7 +1,7 @@
 import express from "express";
 import cors from "cors";
 import { handleDemo } from "./routes/demo";
-import { handleGetMenu, handleGetMenuByCategory, handleGetMenuSeparated, handleAddMenuItem } from "./routes/menu";
+import { handleGetMenu, handleGetMenuByCategory, handleGetMenuSeparated, handleAddMenuItem, handleUpdateMenuItem, handleDeleteMenuItem } from "./routes/menu";
 
 export function createServer() {
   const app = express();
@@ -25,6 +25,8 @@ export function createServer() {
 
   // Items API routes
   app.post("/api/items", handleAddMenuItem);
+  app.put("/api/items/:id", handleUpdateMenuItem);
+  app.delete("/api/items/:id", handleDeleteMenuItem);
 
   // Test endpoint to verify API is working
   app.get("/api/test", (_req, res) => {
@@ -35,7 +37,9 @@ export function createServer() {
         "/api/menu",
         "/api/menu/:category",
         "/api/menu-separated",
-        "POST /api/items"
+        "POST /api/items",
+        "PUT /api/items/:id",
+        "DELETE /api/items/:id"
       ]
     });
   });
