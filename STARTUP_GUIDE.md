@@ -10,7 +10,7 @@ Make sure these services are running:
 cd d:\SpringBoot\qr_menu
 mvn spring-boot:run
 ```
-**Backend will be available at:** `http://localhost:8090`
+**Backend will be available at:** `https://qr-menu-api-oj76.onrender.com`
 
 ## Step 2: Start React Frontend
 ```powershell
@@ -52,7 +52,7 @@ npm run dev
 - Verify database connection in `application.yml`
 
 ### Frontend Issues
-- Check if `VITE_API_URL=http://localhost:8090` in `.env.development`
+- Check if `https://qr-menu-api-oj76.onrender.com` in `.env.development`
 - Verify backend is running and accessible
 - Check browser console for errors
 
