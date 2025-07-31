@@ -104,14 +104,3 @@
     @apply bg-background text-foreground;
   }
 }
-/* .manu-item{
-  position: relative;
-  z-index: 1;
-}
-.manu-button{
-  top: 240px;
-  left: 0;
-  right: 0;
-  z-index: 2;
-  
-} */
