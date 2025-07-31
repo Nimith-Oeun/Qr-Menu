@@ -346,7 +346,7 @@ export default function Index() {
                           size : {item.size}
                         </p>
                         <p className="font-poppins text-sm sm:text-base text-cafe-text-medium">
-                          price : {item.price}
+                          price : {item.price}$
                         </p>
                         {item.description && (
                           <p className="font-poppins text-xs text-cafe-text-light opacity-75">
