@@ -16,6 +16,7 @@ export default {
       fontFamily: {
         'poppins': ['Poppins', 'sans-serif'],
         'sriracha': ['Sriracha', 'cursive'],
+
       },
       colors: {
         'cafe-orange': '#FFB649',

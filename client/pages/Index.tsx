@@ -270,7 +270,7 @@ export default function Index() {
                       }`}
                     >
                       <h3
-                        className={`font-poppins font-bold text-lg sm:text-xl text-cafe-text-dark mb-2 text-center ${
+                        className={`font-poppins font-bold text-lg sm:text-xl text-cafe-text-dark mb-2 text-left ${
                           isVisible ? "opacity-100" : "opacity-0"
                         }`}
                       >
@@ -283,10 +283,10 @@ export default function Index() {
                             : "opacity-0 translate-x-4"
                         }`}
                       >
-                        <p className="font-poppins font-bold text-sm sm:text-base text-cafe-text-light">
+                        <p className="font-poppins text-sm sm:text-base text-cafe-text-light">
                           size : {item.size}
                         </p>
-                        <p className="font-poppins font-bold text-sm sm:text-base text-cafe-text-medium">
+                        <p className="font-poppins text-sm sm:text-base text-cafe-text-medium">
                           price : {item.price}
                         </p>
                       </div>
