@@ -288,12 +288,12 @@ export default function Index() {
           {!loading && !error && currentMenuItems.length === 0 && (
             <div className="text-center py-8">
               <p className="text-cafe-text-medium mb-4">📭 No {activeTab}s available</p>
-              <button
+              {/* <button
                 onClick={() => navigate("/qr-menu-chhong_caffe/create-item")}
                 className="px-4 py-2 bg-cafe-orange text-white rounded-lg hover:bg-cafe-brown transition-colors"
               >
                 ➕ Add First {activeTab}
-              </button>
+              </button> */}
             </div>
           )}
 
