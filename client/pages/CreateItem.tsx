@@ -88,7 +88,7 @@ export default function CreateItem() {
 
       // Auto redirect after 2 seconds
       setTimeout(() => {
-        navigate("/qr-menu-chhong_caffe");
+        navigate("/qr-menu-chhong_caffe/admin");
       }, 2000);
 
     } catch (err) {
@@ -220,14 +220,19 @@ export default function CreateItem() {
                   <Label htmlFor="size" className="text-sm font-medium text-cafe-text-dark">
                     Size *
                   </Label>
-                  <Input
-                    id="size"
+                  <Select
                     value={formData.size}
-                    onChange={(e) => handleInputChange("size", e.target.value)}
-                    placeholder="e.g., M, L, XL"
+                    onValueChange={(value) => handleInputChange("size", value)}
                     disabled={isSubmitting}
-                    className={errors.size ? "border-red-500" : ""}
-                  />
+                  >
+                    <SelectTrigger className={errors.size ? "border-red-500" : ""}>
+                      <SelectValue placeholder="Select size" />
+                    </SelectTrigger>
+                    <SelectContent>
+                      <SelectItem value="S">Small (S)</SelectItem>
+                      <SelectItem value="L">Large (L)</SelectItem>
+                    </SelectContent>
+                  </Select>
                   {errors.size && <p className="text-red-500 text-xs mt-1">{errors.size}</p>}
                 </div>
 
