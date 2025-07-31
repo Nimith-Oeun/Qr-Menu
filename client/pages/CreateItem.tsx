@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { menuApi, MenuItem, ApiError } from "../lib/api";
+import { menuApi, CreateItemRequest, ApiError } from "../lib/api";
 import ImageWithPlaceholder from "../components/ImageWithPlaceholder";
 import { Button } from "../components/ui/button";
 import { Input } from "../components/ui/input";
@@ -61,12 +61,12 @@ export default function CreateItem() {
     try {
       setIsSubmitting(true);
       
-      const newItem: Omit<MenuItem, 'id'> = {
+      const newItem: CreateItemRequest = {
         name: formData.name.trim(),
         size: formData.size.trim(),
         price: formData.price.trim(),
         image: formData.image.trim() || undefined,
-        category: formData.category as 'drink' | 'food',
+        category: formData.category.toUpperCase() as 'DRINK' | 'FOOD',
         description: formData.description.trim() || undefined,
       };
 

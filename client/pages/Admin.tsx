@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-import { menuApi, MenuItem, ApiError } from "../lib/api";
+import { menuApi, DisplayMenuItem, CreateItemRequest, UpdateItemRequest, ApiError } from "../lib/api";
 import ImageWithPlaceholder from "../components/ImageWithPlaceholder";
 import { Button } from "../components/ui/button";
 import { Input } from "../components/ui/input";
@@ -58,7 +58,7 @@ interface EditFormData {
 
 export default function Admin() {
   const navigate = useNavigate();
-  const [menuItems, setMenuItems] = useState<MenuItem[]>([]);
+  const [menuItems, setMenuItems] = useState<DisplayMenuItem[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
   const [activeFilter, setActiveFilter] = useState<"all" | "drink" | "food">(
@@ -66,7 +66,7 @@ export default function Admin() {
   );
 
   // Edit modal state
-  const [editingItem, setEditingItem] = useState<MenuItem | null>(null);
+  const [editingItem, setEditingItem] = useState<DisplayMenuItem | null>(null);
   const [editFormData, setEditFormData] = useState<EditFormData>({
     name: "",
     size: "",
@@ -86,7 +86,7 @@ export default function Admin() {
         setError(null);
 
         const response = await menuApi.getMenuSeparated();
-        const allItems: MenuItem[] = [...response.drinks, ...response.foods];
+        const allItems: DisplayMenuItem[] = [...response.drinks, ...response.foods];
         setMenuItems(allItems);
         console.log("Admin menu data loaded:", allItems.length, "items");
       } catch (err) {
@@ -119,7 +119,7 @@ export default function Admin() {
   };
 
   // Open edit dialog
-  const handleEditClick = (item: MenuItem) => {
+  const handleEditClick = (item: DisplayMenuItem) => {
     setEditingItem(item);
     setEditFormData({
       name: item.name,
@@ -173,7 +173,7 @@ export default function Admin() {
         size: editFormData.size.trim(),
         price: editFormData.price.trim(),
         image: editFormData.image.trim() || undefined,
-        category: editFormData.category as "drink" | "food",
+        category: editFormData.category.toUpperCase() as "DRINK" | "FOOD",
         description: editFormData.description.trim() || undefined,
       });
 
@@ -200,7 +200,7 @@ export default function Admin() {
   };
 
   // Handle delete
-  const handleDelete = async (item: MenuItem) => {
+  const handleDelete = async (item: DisplayMenuItem) => {
     try {
       await menuApi.deleteMenuItem(item.id);
 

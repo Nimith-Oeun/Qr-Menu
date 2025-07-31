@@ -1,11 +1,11 @@
 import { RequestHandler } from "express";
-import { MenuResponse, MenuItem, MenuByCategoryResponse } from "@shared/api";
+import { MenuResponse, DisplayMenuItem, MenuByCategoryResponse } from "@shared/api";
 
 // Mock data - replace this with your actual database calls
-let mockMenuItems: MenuItem[] = [
+let mockMenuItems: DisplayMenuItem[] = [
   // Drinks
   ...Array.from({ length: 7 }, (_, i) => ({
-    id: `drink-${i + 1}`,
+    id: i + 1,
     name: `Drink ${i + 1}`,
     size: i % 2 === 0 ? "M" : "L",
     price: `${2 + (i % 3)}`,
@@ -14,7 +14,7 @@ let mockMenuItems: MenuItem[] = [
   })),
   // Foods
   ...Array.from({ length: 8 }, (_, i) => ({
-    id: `food-${i + 1}`,
+    id: i + 8,
     name: `Food ${i + 1}`,
     size: i % 2 === 0 ? "M" : "L",
     price: `${4 + (i % 4)}`,
@@ -114,10 +114,10 @@ export const handleAddMenuItem: RequestHandler = async (req, res) => {
     }
     
     // Generate new ID
-    const newId = `${category}-${Date.now()}`;
+    const newId = Math.max(...mockMenuItems.map(item => item.id), 0) + 1;
     
     // Create new item
-    const newItem: MenuItem = {
+    const newItem: DisplayMenuItem = {
       id: newId,
       name: name.trim(),
       size: size.trim(),
@@ -149,7 +149,7 @@ export const handleUpdateMenuItem: RequestHandler = async (req, res) => {
     const { name, size, price, image, category, description } = req.body;
     
     // Find the item to update
-    const itemIndex = mockMenuItems.findIndex(item => item.id === id);
+    const itemIndex = mockMenuItems.findIndex(item => item.id === parseInt(id));
     if (itemIndex === -1) {
       return res.status(404).json({ error: 'Menu item not found' });
     }
@@ -169,8 +169,8 @@ export const handleUpdateMenuItem: RequestHandler = async (req, res) => {
     }
     
     // Update the item
-    const updatedItem: MenuItem = {
-      id,
+    const updatedItem: DisplayMenuItem = {
+      id: parseInt(id),
       name: name.trim(),
       size: size.trim(),
       price: price.trim(),
@@ -200,7 +200,7 @@ export const handleDeleteMenuItem: RequestHandler = async (req, res) => {
     const { id } = req.params;
     
     // Find the item to delete
-    const itemIndex = mockMenuItems.findIndex(item => item.id === id);
+    const itemIndex = mockMenuItems.findIndex(item => item.id === parseInt(id));
     if (itemIndex === -1) {
       return res.status(404).json({ error: 'Menu item not found' });
     }

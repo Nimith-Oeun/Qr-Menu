@@ -25,7 +25,8 @@ app.get("*", (req, res) => {
 app.listen(port, () => {
   console.log(`🚀 Fusion Starter server running on port ${port}`);
   console.log(`📱 Frontend: http://localhost:${port}`);
-  console.log(`🔧 API: http://localhost:${port}/api`);
+  console.log(`🔧 API: https://qr-menu-api-oj76.onrender.com/api`);
+  console.log(`📂 local: http://localhost:${port}/`);
 });
 
 // Graceful shutdown
