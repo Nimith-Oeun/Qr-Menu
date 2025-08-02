@@ -30,7 +30,13 @@ export const handleGetMenu: RequestHandler = async (req, res) => {
     // const items = await db.menuItems.findAll();
     
     const response: MenuResponse = {
-      items: mockMenuItems,
+      items: mockMenuItems.map(item => ({
+        ...item,
+        category: item.category === 'drink' ? 'DRINK' : 'FOOD',
+        isActive: true,
+        createdAt: '', // or new Date().toISOString() if you want a timestamp
+        updatedAt: '', // or new Date().toISOString()
+      })),
     };
     res.status(200).json(response);
   } catch (error) {
@@ -58,7 +64,13 @@ export const handleGetMenuByCategory: RequestHandler = async (req, res) => {
       : mockMenuItems;
 
     const response: MenuResponse = {
-      items: filteredItems,
+      items: filteredItems.map(item => ({
+        ...item,
+        category: item.category === 'drink' ? 'DRINK' : 'FOOD',
+        isActive: true,
+        createdAt: '', // or new Date().toISOString()
+        updatedAt: '', // or new Date().toISOString()
+      })),
     };
     res.status(200).json(response);
   } catch (error) {
@@ -76,8 +88,24 @@ export const handleGetMenuSeparated: RequestHandler = async (req, res) => {
     // const drinks = await db.menuItems.findAll({ where: { category: 'drink' } });
     // const foods = await db.menuItems.findAll({ where: { category: 'food' } });
 
-    const drinks = mockMenuItems.filter(item => item.category === 'drink');
-    const foods = mockMenuItems.filter(item => item.category === 'food');
+    const drinks = mockMenuItems
+      .filter(item => item.category === 'drink')
+      .map(item => ({
+        ...item,
+        category: 'DRINK' as 'DRINK',
+        isActive: true,
+        createdAt: '', // or new Date().toISOString()
+        updatedAt: '', // or new Date().toISOString()
+      }));
+    const foods = mockMenuItems
+      .filter(item => item.category === 'food')
+      .map(item => ({
+        ...item,
+        category: 'FOOD' as 'FOOD',
+        isActive: true,
+        createdAt: '', // or new Date().toISOString()
+        updatedAt: '', // or new Date().toISOString()
+      }));
 
     const response: MenuByCategoryResponse = {
       drinks,
