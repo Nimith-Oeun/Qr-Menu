@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { menuApi, CreateItemRequest, ApiError } from "../lib/api";
+import ImageUploadService from "../lib/imageUpload";
 import ImageWithPlaceholder from "../components/ImageWithPlaceholder";
 import { Button } from "../components/ui/button";
 import { Input } from "../components/ui/input";
@@ -8,7 +9,7 @@ import { Label } from "../components/ui/label";
 import { Textarea } from "../components/ui/textarea";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "../components/ui/select";
 import { Card, CardContent, CardHeader, CardTitle } from "../components/ui/card";
-import { ArrowLeft, Plus } from "lucide-react";
+import { ArrowLeft, Plus, Upload, X } from "lucide-react";
 
 export default function CreateItem() {
   const navigate = useNavigate();
@@ -21,11 +22,15 @@ export default function CreateItem() {
     size: "",
     price: "",
     image: "",
-    category: "" as 'drink' | 'food' | "",
+    category: "" as 'drink' | 'food' | 'food_set' | "",
     description: "",
   });
 
   const [errors, setErrors] = useState<Record<string, string>>({});
+  const [uploadedFile, setUploadedFile] = useState<File | null>(null);
+  const [uploadProgress, setUploadProgress] = useState(0);
+  const [isUploading, setIsUploading] = useState(false);
+  const [uploadedImageData, setUploadedImageData] = useState<string | null>(null);
 
   const validateForm = () => {
     const newErrors: Record<string, string> = {};
@@ -65,8 +70,8 @@ export default function CreateItem() {
         name: formData.name.trim(),
         size: formData.size.trim(),
         price: formData.price.trim(),
-        image: formData.image.trim() || undefined,
-        category: formData.category.toUpperCase() as 'DRINK' | 'FOOD',
+        image: uploadedImageData || formData.image.trim() || undefined,
+        category: formData.category.toUpperCase() as 'DRINK' | 'FOOD' | 'FOOD_SET',
         description: formData.description.trim() || undefined,
       };
 
@@ -85,6 +90,16 @@ export default function CreateItem() {
         description: "",
       });
       setErrors({});
+      setUploadedFile(null);
+      setUploadProgress(0);
+      setIsUploading(false);
+      setUploadedImageData(null);
+
+      // Reset file input
+      const fileInput = document.getElementById('image-upload') as HTMLInputElement;
+      if (fileInput) {
+        fileInput.value = '';
+      }
 
       // Auto redirect after 2 seconds
       setTimeout(() => {
@@ -110,6 +125,78 @@ export default function CreateItem() {
     }
     if (success) {
       setSuccess(false);
+    }
+  };
+
+  // File upload functions
+  const handleFileSelect = async (event: React.ChangeEvent<HTMLInputElement>) => {
+    const file = event.target.files?.[0];
+    if (!file) return;
+
+    // Validate file
+    const validation = ImageUploadService.validateImageFile(file);
+    if (!validation.valid) {
+      setError(validation.error || 'Invalid file');
+      return;
+    }
+
+    setUploadedFile(file);
+    setError(null);
+    setIsUploading(true);
+    setUploadProgress(0);
+
+    try {
+      // Upload file using the upload service
+      const result = await ImageUploadService.uploadFile(file, (progress) => {
+        setUploadProgress(progress);
+      });
+
+      // Store the base64 image data
+      setUploadedImageData(result.url);
+      setIsUploading(false);
+      
+    } catch (err) {
+      console.error('Upload failed:', err);
+      setError(err instanceof Error ? err.message : 'Upload failed');
+      setIsUploading(false);
+      setUploadedFile(null);
+      setUploadProgress(0);
+      setUploadedImageData(null);
+    }
+  };
+
+  const simulateUpload = async () => {
+    if (!uploadedFile) return;
+
+    setIsUploading(true);
+    setUploadProgress(0);
+
+    try {
+      const result = await ImageUploadService.uploadFile(uploadedFile, (progress) => {
+        setUploadProgress(progress);
+      });
+
+      handleInputChange('image', result.url);
+      setIsUploading(false);
+      
+    } catch (err) {
+      console.error('Upload failed:', err);
+      setError(err instanceof Error ? err.message : 'Upload failed');
+      setIsUploading(false);
+    }
+  };
+
+  const removeUploadedFile = () => {
+    setUploadedFile(null);
+    setUploadProgress(0);
+    setIsUploading(false);
+    setUploadedImageData(null);
+    handleInputChange('image', '');
+    
+    // Reset file input
+    const fileInput = document.getElementById('image-upload') as HTMLInputElement;
+    if (fileInput) {
+      fileInput.value = '';
     }
   };
 
@@ -231,7 +318,9 @@ export default function CreateItem() {
                     </SelectTrigger>
                     <SelectContent>
                       <SelectItem value="S">Small (S)</SelectItem>
+                      <SelectItem value="M">Medium (M)</SelectItem>
                       <SelectItem value="L">Large (L)</SelectItem>
+                      <SelectItem value="Set">Set</SelectItem>
                     </SelectContent>
                   </Select>
                   {errors.size && <p className="text-red-500 text-xs mt-1">{errors.size}</p>}
@@ -253,26 +342,133 @@ export default function CreateItem() {
                 </div>
 
                 <div>
-                  <Label htmlFor="image" className="text-sm font-medium text-cafe-text-dark">
-                    Image URL
+                  <Label className="text-sm font-medium text-cafe-text-dark mb-3 block">
+                    Item Image
                   </Label>
-                  <Input
-                    id="image"
-                    value={formData.image}
-                    onChange={(e) => handleInputChange("image", e.target.value)}
-                    placeholder="https://example.com/image.jpg"
-                    disabled={isSubmitting}
-                  />
-                  <p className="text-xs text-gray-500 mt-1">
-                    Optional. Default image will be used if not provided.
-                  </p>
+                  
+                  {/* Upload Method Selection */}
+                  <div className="space-y-4">
+                    {/* File Upload Section */}
+                    <div className="border-2 border-dashed border-gray-300 rounded-lg p-4 text-center hover:border-cafe-orange transition-colors">
+                      {!uploadedFile ? (
+                        <div>
+                          <Upload className="h-8 w-8 mx-auto text-gray-400 mb-2" />
+                          <p className="text-sm text-gray-600 mb-2">
+                            Upload an image file
+                          </p>
+                          <input
+                            id="image-upload"
+                            type="file"
+                            accept="image/*"
+                            onChange={handleFileSelect}
+                            disabled={isSubmitting}
+                            className="hidden"
+                          />
+                          <Button
+                            type="button"
+                            variant="outline"
+                            size="sm"
+                            onClick={() => document.getElementById('image-upload')?.click()}
+                            disabled={isSubmitting}
+                            className="mb-2"
+                          >
+                            <Upload className="h-4 w-4 mr-2" />
+                            Choose File
+                          </Button>
+                          <p className="text-xs text-gray-500">
+                            Max 5MB • JPG, PNG, GIF
+                          </p>
+                        </div>
+                      ) : (
+                        <div className="space-y-3">
+                          {/* Image Preview */}
+                          {uploadedImageData && (
+                            <div className="relative">
+                              <img 
+                                src={uploadedImageData} 
+                                alt="Preview"
+                                className="w-full h-32 object-cover rounded-lg border"
+                              />
+                            </div>
+                          )}
+                          
+                          <div className="flex items-center justify-between">
+                            <div className="flex items-center space-x-2">
+                              <Upload className="h-4 w-4 text-green-600" />
+                              <span className="text-sm font-medium text-gray-700">
+                                {uploadedFile.name}
+                              </span>
+                            </div>
+                            <Button
+                              type="button"
+                              variant="ghost"
+                              size="sm"
+                              onClick={removeUploadedFile}
+                              disabled={isSubmitting}
+                              className="text-red-600 hover:text-red-700"
+                            >
+                              <X className="h-4 w-4" />
+                            </Button>
+                          </div>
+                          
+                          {isUploading && (
+                            <div className="space-y-2">
+                              <div className="flex justify-between text-xs text-gray-600">
+                                <span>Uploading...</span>
+                                <span>{uploadProgress}%</span>
+                              </div>
+                              <div className="w-full bg-gray-200 rounded-full h-2">
+                                <div 
+                                  className="bg-cafe-orange h-2 rounded-full transition-all duration-300"
+                                  style={{ width: `${uploadProgress}%` }}
+                                ></div>
+                              </div>
+                            </div>
+                          )}
+                          
+                          {!isUploading && uploadProgress === 100 && (
+                            <div className="flex items-center space-x-2 text-green-600">
+                              <svg className="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
+                              </svg>
+                              <span className="text-sm">Upload complete</span>
+                            </div>
+                          )}
+                        </div>
+                      )}
+                    </div>
+
+                    {/* OR Divider */}
+                    <div className="flex items-center">
+                      <div className="flex-1 border-t border-gray-300"></div>
+                      <span className="px-3 text-sm text-gray-500">OR</span>
+                      <div className="flex-1 border-t border-gray-300"></div>
+                    </div>
+
+                    {/* URL Input Section */}
+                    <div>
+                      <Label htmlFor="image" className="text-sm font-medium text-cafe-text-dark">
+                        Image URL
+                      </Label>
+                      <Input
+                        id="image"
+                        value={formData.image}
+                        onChange={(e) => handleInputChange("image", e.target.value)}
+                        placeholder="https://example.com/image.jpg"
+                        disabled={isSubmitting || !!uploadedFile}
+                      />
+                      <p className="text-xs text-gray-500 mt-1">
+                        {uploadedFile ? 'File upload takes priority over URL' : 'Enter direct image URL as alternative'}
+                      </p>
+                    </div>
+                  </div>
                   
                   {/* Image Preview */}
-                  <div className="mt-3">
+                  <div className="mt-4">
                     <Label className="text-sm font-medium text-cafe-text-dark mb-2 block">
                       Preview
                     </Label>
-                    <div className="w-32 h-24 border border-gray-200 rounded-lg overflow-hidden">
+                    <div className="w-full max-w-xs h-48 border border-gray-200 rounded-lg overflow-hidden mx-auto">
                       <ImageWithPlaceholder
                         src={formData.image}
                         alt="Preview"
