@@ -314,13 +314,13 @@ export default function Index() {
                     {isVisible && (
                       <div className="absolute top-0 left-0 right-0 h-1 bg-gradient-to-r from-cafe-orange to-cafe-brown animate-pulse" />
                     )}
-                    <div className="aspect-[174/119] overflow-hidden relative">
+                    <div className="aspect-square overflow-hidden relative">
                       <ImageWithPlaceholder
                         src={item.image}
                         alt={item.name}
                         category={item.category}
                         isVisible={isVisible}
-                        className="w-full h-full"
+                        className="w-full h-full object-cover"
                       />
                     </div>
                     <div
@@ -342,9 +342,11 @@ export default function Index() {
                             : "opacity-0 translate-x-4"
                         }`}
                       >
-                        <p className="font-poppins text-sm sm:text-base text-cafe-text-light">
-                          size : {item.size}
-                        </p>
+                        {activeTab === "food" && (
+                          <p className="font-poppins text-sm sm:text-base text-cafe-text-light">
+                            size : {item.size}
+                          </p>
+                        )}
                         <p className="font-poppins text-sm sm:text-base text-cafe-text-medium">
                           price : {item.price}$
                         </p>
