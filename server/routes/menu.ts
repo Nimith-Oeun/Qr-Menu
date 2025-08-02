@@ -4,7 +4,7 @@ import { MenuResponse, DisplayMenuItem, MenuByCategoryResponse } from "@shared/a
 // Mock data - replace this with your actual database calls
 let mockMenuItems: DisplayMenuItem[] = [
   // Drinks
-  ...Array.from({ length: 7 }, (_, i) => ({
+  ...Array.from({ length: 5 }, (_, i) => ({
     id: i + 1,
     name: `Drink ${i + 1}`,
     size: i % 2 === 0 ? "M" : "L",
@@ -13,13 +13,22 @@ let mockMenuItems: DisplayMenuItem[] = [
     category: 'drink' as const,
   })),
   // Foods
-  ...Array.from({ length: 8 }, (_, i) => ({
-    id: i + 8,
+  ...Array.from({ length: 5 }, (_, i) => ({
+    id: i + 6,
     name: `Food ${i + 1}`,
     size: i % 2 === 0 ? "M" : "L",
     price: `${4 + (i % 4)}`,
     image: "https://api.builder.io/api/v1/image/assets/TEMP/977e1ee7cf4be018cd9e90c67e54df15c36e50b0?width=347",
     category: 'food' as const,
+  })),
+  // Food Sets
+  ...Array.from({ length: 3 }, (_, i) => ({
+    id: i + 11,
+    name: `Food Set ${i + 1}`,
+    size: "Set",
+    price: `${8 + (i % 3)}`,
+    image: "https://api.builder.io/api/v1/image/assets/TEMP/c4f8c9b2d3e4f5a6b7c8d9e0f1a2b3c4d5e6f7a8?width=347",
+    category: 'food_set' as const,
   })),
 ];
 
@@ -50,8 +59,8 @@ export const handleGetMenuByCategory: RequestHandler = async (req, res) => {
   try {
     const { category } = req.params;
     
-    if (category && !['drink', 'food'].includes(category)) {
-      return res.status(400).json({ error: 'Invalid category. Must be "drink" or "food"' });
+    if (category && !['drink', 'food', 'food_set'].includes(category)) {
+      return res.status(400).json({ error: 'Invalid category. Must be "drink", "food", or "food_set"' });
     }
 
     // TODO: Replace with actual database call
@@ -87,6 +96,7 @@ export const handleGetMenuSeparated: RequestHandler = async (req, res) => {
     // TODO: Replace with actual database calls
     // const drinks = await db.menuItems.findAll({ where: { category: 'drink' } });
     // const foods = await db.menuItems.findAll({ where: { category: 'food' } });
+    // const foodSets = await db.menuItems.findAll({ where: { category: 'food_set' } });
 
     const drinks = mockMenuItems
       .filter(item => item.category === 'drink')
@@ -106,13 +116,23 @@ export const handleGetMenuSeparated: RequestHandler = async (req, res) => {
         createdAt: '', // or new Date().toISOString()
         updatedAt: '', // or new Date().toISOString()
       }));
+    const foodSets = mockMenuItems
+      .filter(item => item.category === 'food_set')
+      .map(item => ({
+        ...item,
+        category: 'FOOD_SET' as 'FOOD_SET',
+        isActive: true,
+        createdAt: '', // or new Date().toISOString()
+        updatedAt: '', // or new Date().toISOString()
+      }));
 
     const response: MenuByCategoryResponse = {
       drinks,
       foods,
+      foodSets,
     };
     
-    console.log('Sending response:', { drinksCount: drinks.length, foodsCount: foods.length }); // Debug log
+    console.log('Sending response:', { drinksCount: drinks.length, foodsCount: foods.length, foodSetsCount: foodSets.length }); // Debug log
     res.status(200).json(response);
   } catch (error) {
     console.error('Error fetching separated menu:', error);
