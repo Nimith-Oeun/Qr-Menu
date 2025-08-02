@@ -1,4 +1,5 @@
 import { MenuItem, DisplayMenuItem, ApiResponse } from "@shared/api";
+import ImageWithPlaceholder from "@/components/ImageWithPlaceholder";
 
 /**
  * Transform Spring Boot MenuItem to frontend DisplayMenuItem
@@ -27,8 +28,8 @@ export function transformMenuItems(items: MenuItem[]): DisplayMenuItem[] {
  */
 export function getDefaultImage(category: 'DRINK' | 'FOOD'): string {
   return category === 'DRINK'
-    ? "https://api.builder.io/api/v1/image/assets/TEMP/2e811b0fa84092c929b579286fded5e620c45c19?width=347"
-    : "https://api.builder.io/api/v1/image/assets/TEMP/977e1ee7cf4be018cd9e90c67e54df15c36e50b0?width=347";
+    ? "https://api.builder.io/api/v1/image/assets/TEMP/drink-default-image.png"
+    : "https://api.builder.io/api/v1/image/assets/TEMP/food-default-image.png";
 }
 
 /**
