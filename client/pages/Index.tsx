@@ -298,74 +298,79 @@ export default function Index() {
           )}
 
           {!loading && !error && currentMenuItems.length > 0 && (
-            <div className="grid grid-cols-2 gap-4 sm:gap-5 md:grid-cols-3 lg:grid-cols-4 xl:gap-6">
-              {currentMenuItems.map((item, index) => {
-              const isVisible = visibleItems.has(item.id.toString());
-              return (
-                <div key={item.id} className="w-full" data-item-id={item.id}>
-                  <div
-                    className={`bg-white rounded-[15px] shadow-lg overflow-hidden transition-all duration-500 ${
-                      isVisible
-                        ? "opacity-100 transform translate-y-0 scale-100 hover:shadow-xl hover:scale-105"
-                        : "opacity-0 transform translate-y-8 scale-95"
-                    }`}
-                    style={{ transitionDelay: `${index * 100}ms` }}
-                  >
-                    {isVisible && (
-                      <div className="absolute top-0 left-0 right-0 h-1 bg-gradient-to-r from-cafe-orange to-cafe-brown animate-pulse" />
-                    )}
-                    <div className="aspect-square overflow-hidden relative">
-                      <ImageWithPlaceholder
-                        src={item.image}
-                        alt={item.name}
-                        category={item.category}
-                        isVisible={isVisible}
-                        className="w-full h-full object-cover"
-                      />
-                    </div>
-                    <div
-                      className={`p-3 sm:p-4 bg-white/50 transition-all duration-500 ${
-                        isVisible ? "translate-y-0" : "translate-y-4"
-                      }`}
-                    >
-                      <h3
-                        className={`font-poppins font-bold text-lg sm:text-xl text-cafe-text-dark mb-2 text-left ${
-                          isVisible ? "opacity-100" : "opacity-0"
-                        }`}
-                      >
-                        {item.name}
-                      </h3>
-                      <div
-                        className={`space-y-1 ${
-                          isVisible
-                            ? "opacity-100 translate-x-0"
-                            : "opacity-0 translate-x-4"
-                        }`}
-                      >
-                        {activeTab === "food" && (
-                          <p className="font-poppins text-sm sm:text-base text-cafe-text-light">
-                            size : {item.size}
-                          </p>
-                        )}
-                        <p className="font-poppins text-sm sm:text-base text-cafe-text-medium">
-                          price : {item.price}$
-                        </p>
-                        {item.description && (
-                          <p className="font-poppins text-xs text-cafe-text-light opacity-75">
-                            {item.description}
-                          </p>
-                        )}
-                      </div>
-                    </div>
-                    {isVisible && (
-                      <div className="absolute inset-0 rounded-[15px] ring-2 ring-cafe-orange/20 pointer-events-none animate-pulse"></div>
-                    )}
-                  </div>
-                </div>
-              );
-            })}
-          </div>
+  <div className="grid grid-cols-2 gap-4 sm:gap-5 md:grid-cols-3 lg:grid-cols-4 xl:gap-6">
+    {currentMenuItems.map((item, index) => {
+    const isVisible = visibleItems.has(item.id.toString());
+    return (
+      <div key={item.id} className="w-full" data-item-id={item.id}>
+        <div
+          className={`bg-white rounded-[15px] shadow-lg overflow-hidden transition-all duration-500 ${
+            isVisible
+              ? "opacity-100 transform translate-y-0 scale-100 hover:shadow-xl hover:scale-105"
+              : "opacity-0 transform translate-y-8 scale-95"
+          }`}
+          style={{ transitionDelay: `${index * 100}ms` }}
+        >
+          {isVisible && (
+            <div className="absolute top-0 left-0 right-0 h-1 bg-gradient-to-r from-cafe-orange to-cafe-brown animate-pulse" />
           )}
+          <div className="aspect-square overflow-hidden relative">
+            <ImageWithPlaceholder
+              src={item.image}
+              alt={item.name}
+              category={item.category}
+              isVisible={isVisible}
+              className="w-full h-full object-cover"
+            />
+          </div>
+          <div
+            className={`p-3 sm:p-4 bg-white/50 transition-all duration-500 ${
+              isVisible ? "translate-y-0" : "translate-y-4"
+            }`}
+          >
+            <h3
+              className={`font-poppins font-bold text-lg sm:text-xl text-cafe-text-dark mb-2 text-center ${
+                isVisible ? "opacity-100" : "opacity-0"
+              }`}
+            >
+              {item.name}
+            </h3>
+            <div
+              className={`transition-all duration-500 ${
+                isVisible
+                  ? "opacity-100 translate-x-0"
+                  : "opacity-0 translate-x-4"
+              }`}
+            >
+              {/* Size and Price in horizontal layout */}
+              <div className="flex items-center justify-between mb-1">
+                {activeTab === "food" && (
+                  <p className="font-poppins text-sm sm:text-base text-cafe-text-light">
+                    size : {item.size}
+                  </p>
+                )}
+                <p className="font-poppins text-sm sm:text-base text-cafe-text-light">
+                  price : {item.price}$
+                </p>
+              </div>
+              
+              {/* Description */}
+              {item.description && (
+                <p className="font-poppins text-xs text-cafe-text-light opacity-75 mt-1">
+                  {item.description}
+                </p>
+              )}
+            </div>
+          </div>
+          {isVisible && (
+            <div className="absolute inset-0 rounded-[15px] ring-2 ring-cafe-orange/20 pointer-events-none animate-pulse"></div>
+          )}
+        </div>
+      </div>
+    );
+  })}
+</div>
+)}
         </div>
       </div>
     </div>
