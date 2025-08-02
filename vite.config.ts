@@ -5,6 +5,7 @@ import { createServer } from "./server";
 
 // https://vitejs.dev/config/
 export default defineConfig(({ mode }) => ({
+  base: "/qr-menu-chhong_caffe/",
   server: {
     host: "::",
     port: 8080,
