@@ -5,13 +5,15 @@ import path from "path";
 export default defineConfig({
   build: {
     lib: {
-      entry: path.resolve(__dirname, "server/node-build.ts"),
+      entry: {
+        "node-build": path.resolve(__dirname, "server/node-build.ts"),
+        "vercel": path.resolve(__dirname, "server/vercel.ts")
+      },
       name: "server",
-      fileName: "production",
       formats: ["es"],
     },
     outDir: "dist/server",
-    target: "node22",
+    target: "node18",
     ssr: true,
     rollupOptions: {
       external: [

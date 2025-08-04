@@ -1,8 +1,8 @@
 import { MenuResponse, MenuItem, MenuByCategoryResponse, ApiResponse, CreateItemRequest, UpdateItemRequest } from "@shared/api";
 import { extractApiData, transformMenuItems, transformMenuItem } from "./apiTransform";
 
-// Spring Boot backend URL
-const API_BASE_URL = import.meta.env.VITE_API_URL || 'http://localhost:8090';
+// Use relative URLs in production (Vercel), fallback to localhost for development
+const API_BASE_URL = import.meta.env.VITE_API_URL || (import.meta.env.PROD ? '' : 'http://localhost:8080');
 
 class ApiError extends Error {
   constructor(public status: number, message: string) {
