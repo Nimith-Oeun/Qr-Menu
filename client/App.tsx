@@ -20,10 +20,10 @@ const App = () => (
       <Sonner />
       <BrowserRouter>
         <Routes>
+          <Route path="/" element={<Index />} />
           <Route path="/qr-menu-chhong_caffe" element={<Index />} />
           <Route path="/qr-menu-chhong_caffe/create-item" element={<CreateItem />} />
           <Route path="/qr-menu-chhong_caffe/admin" element={<Admin />} />
-          {/* <Route path="/" element={<Index />} /> */}
           {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
           <Route path="*" element={<NotFound />} />
         </Routes>

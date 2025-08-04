@@ -2,23 +2,20 @@
   "version": 2,
   "builds": [
     {
-      "src": "dist/server/vercel.mjs",
-      "use": "@vercel/node"
+      "src": "package.json",
+      "use": "@vercel/static-build",
+      "config": {
+        "distDir": "dist/spa"
+      }
     }
   ],
   "routes": [
     {
-      "src": "/api/(.*)",
-      "dest": "/dist/server/vercel.mjs"
+      "handle": "filesystem"
     },
     {
       "src": "/(.*)",
-      "dest": "/dist/spa/$1"
+      "dest": "/index.html"
     }
-  ],
-  "functions": {
-    "dist/server/vercel.mjs": {
-      "maxDuration": 30
-    }
-  }
+  ]
 }

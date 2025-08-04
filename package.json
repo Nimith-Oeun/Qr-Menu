@@ -12,11 +12,12 @@
   },
   "scripts": {
     "dev": "vite",
-    "build": "npm run build:client && npm run build:server",
+    "build": "npm run build:client",
     "build:client": "vite build",
     "build:server": "vite build --config vite.config.server.ts",
+    "build:full": "npm run build:client && npm run build:server",
     "start": "node dist/server/node-build.mjs",
-    "vercel-build": "npm run build",
+    "vercel-build": "npm run build:client",
     "test": "vitest --run",
     "format.fix": "prettier --write .",
     "typecheck": "tsc"
@@ -70,6 +71,7 @@
     "@types/react": "^18.3.3",
     "@types/react-dom": "^18.3.0",
     "@types/three": "^0.176.0",
+    "@vercel/node": "^3.0.0",
     "@vitejs/plugin-react-swc": "^3.5.0",
     "autoprefixer": "^10.4.21",
     "class-variance-authority": "^0.7.1",
