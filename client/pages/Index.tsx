@@ -491,19 +491,8 @@ export default function Index() {
                 const isVisible = visibleItems.has(item.id.toString());
                 return (
                   <div key={item.id} className="w-full h-full" data-item-id={item.id}>
-                    <div
-                      className={`bg-white rounded-[20px] shadow-md hover:shadow-xl overflow-hidden transition-all duration-300 h-full flex flex-col relative group ${
-                        isVisible
-                          ? "opacity-100 transform translate-y-0 scale-100 hover:scale-[1.02]"
-                          : "opacity-0 transform translate-y-8 scale-95"
-                      }`}
-                      style={{ transitionDelay: `${index * 100}ms` }}
-                    >
-                      {/* Top gradient bar */}
-                      {isVisible && (
-                        <div className="absolute top-0 left-0 right-0 h-1 bg-gradient-to-r from-cafe-orange via-yellow-400 to-cafe-brown opacity-80 group-hover:opacity-100 transition-opacity duration-300" />
-                      )}
-                      
+                    <div className="bg-white rounded-[20px] shadow-md overflow-hidden h-full flex flex-col relative">
+                    
                       {/* Image Container */}
                       <div className="aspect-square overflow-hidden relative bg-gray-50">
                         <ImageWithPlaceholder
@@ -511,24 +500,16 @@ export default function Index() {
                           alt={item.name}
                           category={item.category}
                           isVisible={isVisible}
-                          className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+                          className="w-full h-full object-cover"
                         />
-                        {/* Overlay gradient for better text readability */}
-                        <div className="absolute inset-0 bg-gradient-to-t from-black/10 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
                       </div>
                       
                       {/* Content Container - Fixed height for consistency */}
-                      <div
-                        className={`p-2 sm:p-3 md:p-4 bg-gradient-to-b from-white to-gray-50/80 flex-1 flex flex-col justify-between min-h-[100px] sm:min-h-[120px] transition-all duration-500 ${
-                          isVisible ? "translate-y-0" : "translate-y-4"
-                        }`}
-                      >
+                      <div className="p-2 sm:p-3 md:p-4 bg-gradient-to-b from-white to-gray-50/80 flex-1 flex flex-col justify-between min-h-[100px] sm:min-h-[120px]">
                         {/* Title with fixed height */}
                         <div className="flex-shrink-0 mb-2 sm:mb-3">
                           <h3
-                            className={`font-poppins font-bold text-base sm:text-base md:text-lg text-cafe-text-dark text-center leading-tight h-10 sm:h-12 flex items-center justify-center transition-all duration-500 ${
-                              isVisible ? "opacity-100" : "opacity-0"
-                            }`}
+                            className="font-poppins font-bold text-base sm:text-base md:text-lg text-cafe-text-dark text-center leading-tight h-10 sm:h-12 flex items-center justify-center"
                             style={{
                               display: '-webkit-box',
                               WebkitLineClamp: 2,
@@ -542,13 +523,7 @@ export default function Index() {
                         </div>
 
                         {/* Details section */}
-                        <div
-                          className={`transition-all duration-500 space-y-1.5 sm:space-y-2 ${
-                            isVisible
-                              ? "opacity-100 translate-x-0"
-                              : "opacity-0 translate-x-4"
-                          }`}
-                        >
+                        <div className="space-y-1.5 sm:space-y-2">
                           {/* Size and Price */}
                           <div className="bg-white/60 rounded-lg p-1.5 sm:p-2 backdrop-blur-sm">
                             <div className="flex items-center justify-between text-xs sm:text-sm">
@@ -588,14 +563,6 @@ export default function Index() {
                           )}
                         </div>
                       </div>
-                      
-                      {/* Hover border effect */}
-                      {isVisible && (
-                        <div className="absolute inset-0 rounded-[20px] ring-2 ring-cafe-orange/0 group-hover:ring-cafe-orange/30 pointer-events-none transition-all duration-300"></div>
-                      )}
-                      
-                      {/* Corner accent */}
-                      <div className="absolute top-4 right-4 w-3 h-3 bg-cafe-orange rounded-full opacity-0 group-hover:opacity-100 transition-opacity duration-300 shadow-lg"></div>
                     </div>
                   </div>
                 );
