@@ -11,7 +11,7 @@ export function transformMenuItem(item: MenuItem): DisplayMenuItem {
     size: item.size,
     price: item.price,
     image: item.image || getDefaultImage(item.category),
-    category: item.category.toLowerCase() as 'drink' | 'food',
+    category: item.category.toLowerCase().replace('_', '_') as 'drink' | 'food' | 'food_set',
     description: item.description,
   };
 }
@@ -26,10 +26,17 @@ export function transformMenuItems(items: MenuItem[]): DisplayMenuItem[] {
 /**
  * Get default image based on category
  */
-export function getDefaultImage(category: 'DRINK' | 'FOOD'): string {
-  return category === 'DRINK'
-    ? "https://api.builder.io/api/v1/image/assets/TEMP/drink-default-image.png"
-    : "https://api.builder.io/api/v1/image/assets/TEMP/food-default-image.png";
+export function getDefaultImage(category: 'DRINK' | 'FOOD' | 'FOOD_SET'): string {
+  switch (category) {
+    case 'DRINK':
+      return "https://api.builder.io/api/v1/image/assets/TEMP/drink-default-image.png";
+    case 'FOOD':
+      return "https://api.builder.io/api/v1/image/assets/TEMP/food-default-image.png";
+    case 'FOOD_SET':
+      return "https://api.builder.io/api/v1/image/assets/TEMP/c4f8c9b2d3e4f5a6b7c8d9e0f1a2b3c4d5e6f7a8?width=347"; // New default image for food sets
+    default:
+      return "https://api.builder.io/api/v1/image/assets/TEMP/placeholder.png";
+  }
 }
 
 /**

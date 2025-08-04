@@ -30,7 +30,7 @@ export interface MenuItem {
   size: string;
   price: string;
   image?: string;
-  category: 'DRINK' | 'FOOD';
+  category: 'DRINK' | 'FOOD' | 'FOOD_SET';
   description?: string;
   isActive: boolean;
   createdAt?: string;
@@ -46,7 +46,7 @@ export interface DisplayMenuItem {
   size: string;
   price: string;
   image: string;
-  category: 'drink' | 'food';
+  category: 'drink' | 'food' | 'food_set';
   description?: string;
 }
 
@@ -63,6 +63,7 @@ export interface MenuResponse {
 export interface MenuByCategoryResponse {
   drinks: MenuItem[];
   foods: MenuItem[];
+  foodSets: MenuItem[];
 }
 
 /**
@@ -73,7 +74,7 @@ export interface CreateItemRequest {
   size: string;
   price: string;
   image?: string;
-  category: 'DRINK' | 'FOOD';
+  category: 'DRINK' | 'FOOD' | 'FOOD_SET';
   description?: string;
 }
 
@@ -85,6 +86,6 @@ export interface UpdateItemRequest {
   size?: string;
   price?: string;
   image?: string;
-  category?: 'DRINK' | 'FOOD';
+  category?: 'DRINK' | 'FOOD' | 'FOOD_SET';
   description?: string;
 }

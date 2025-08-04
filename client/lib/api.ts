@@ -64,8 +64,13 @@ export const menuApi = {
   },
   
   // Get menu items by category (Spring Boot expects UPPERCASE)
-  getMenuByCategory: async (category: 'drink' | 'food') => {
-    const response = await fetchApi<ApiResponse<MenuItem[]>>(`/api/menu/${category.toUpperCase()}`);
+  getMenuByCategory: async (category: 'drink' | 'food' | 'food_set') => {
+    const categoryMap = {
+      'drink': 'DRINK',
+      'food': 'FOOD',
+      'food_set': 'FOOD_SET'
+    };
+    const response = await fetchApi<ApiResponse<MenuItem[]>>(`/api/menu/${categoryMap[category]}`);
     const items = extractApiData(response);
     return transformMenuItems(items);
   },
@@ -75,8 +80,9 @@ export const menuApi = {
     const response = await fetchApi<ApiResponse<MenuByCategoryResponse>>('/api/menu-separated');
     const data = extractApiData(response);
     return {
-      drinks: transformMenuItems(data.drinks),
-      foods: transformMenuItems(data.foods),
+      drinks: transformMenuItems(data.drinks || []),
+      foods: transformMenuItems(data.foods || []),
+      foodSets: transformMenuItems(data.foodSets || []),
     };
   },
   

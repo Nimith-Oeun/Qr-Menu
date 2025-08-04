@@ -211,6 +211,7 @@ export default function CreateItem() {
                     <SelectContent>
                       <SelectItem value="drink">Drink</SelectItem>
                       <SelectItem value="food">Food</SelectItem>
+                      <SelectItem value="food_set">Food Set</SelectItem>
                     </SelectContent>
                   </Select>
                   {errors.category && <p className="text-red-500 text-xs mt-1">{errors.category}</p>}

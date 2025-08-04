@@ -45,6 +45,7 @@ import {
   Eye,
   Coffee,
   UtensilsCrossed,
+  Package,
 } from "lucide-react";
 
 interface EditFormData {
@@ -52,7 +53,7 @@ interface EditFormData {
   size: string;
   price: string;
   image: string;
-  category: "drink" | "food" | "";
+  category: "drink" | "food" | "food_set" | "";
   description: string;
 }
 
@@ -61,7 +62,7 @@ export default function Admin() {
   const [menuItems, setMenuItems] = useState<DisplayMenuItem[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
-  const [activeFilter, setActiveFilter] = useState<"all" | "drink" | "food">(
+  const [activeFilter, setActiveFilter] = useState<"all" | "drink" | "food" | "food_set">(
     "all",
   );
 
@@ -86,7 +87,7 @@ export default function Admin() {
         setError(null);
 
         const response = await menuApi.getMenuSeparated();
-        const allItems: DisplayMenuItem[] = [...response.drinks, ...response.foods];
+        const allItems: DisplayMenuItem[] = [...response.drinks, ...response.foods, ...(response.foodSets || [])];
         setMenuItems(allItems);
         console.log("Admin menu data loaded:", allItems.length, "items");
       } catch (err) {
@@ -116,6 +117,7 @@ export default function Admin() {
     total: menuItems.length,
     drinks: menuItems.filter((item) => item.category === "drink").length,
     foods: menuItems.filter((item) => item.category === "food").length,
+    foodSets: menuItems.filter((item) => item.category === "food_set").length,
   };
 
   // Open edit dialog
@@ -173,7 +175,7 @@ export default function Admin() {
         size: editFormData.size.trim(),
         price: editFormData.price.trim(),
         image: editFormData.image.trim() || undefined,
-        category: editFormData.category.toUpperCase() as "DRINK" | "FOOD",
+        category: editFormData.category.toUpperCase() as "DRINK" | "FOOD" | "FOOD_SET",
         description: editFormData.description.trim() || undefined,
       });
 
@@ -269,7 +271,7 @@ export default function Admin() {
         {/* Stats Cards */}
         <div className="px-4 py-6">
           <div className="max-w-6xl mx-auto">
-            <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 mb-6">
+            <div className="grid grid-cols-1 sm:grid-cols-4 gap-4 mb-6">
               <Card>
                 <CardContent className="p-4 text-center">
                   <div className="text-2xl font-bold text-cafe-text-dark">
@@ -296,6 +298,15 @@ export default function Admin() {
                     {stats.foods}
                   </div>
                   <div className="text-sm text-cafe-text-medium">Foods</div>
+                </CardContent>
+              </Card>
+              <Card>
+                <CardContent className="p-4 text-center">
+                  <div className="text-2xl font-bold text-cafe-brown flex items-center justify-center gap-2">
+                    <Package className="h-6 w-6" />
+                    {stats.foodSets}
+                  </div>
+                  <div className="text-sm text-cafe-text-medium">Food Sets</div>
                 </CardContent>
               </Card>
             </div>
@@ -332,6 +343,16 @@ export default function Admin() {
                   }`}
                 >
                   Foods
+                </button>
+                <button
+                  onClick={() => setActiveFilter("food_set")}
+                  className={`px-6 py-2 rounded-[16px] font-medium transition-all ${
+                    activeFilter === "food_set"
+                      ? "bg-cafe-orange text-white shadow-md"
+                      : "text-cafe-text-dark hover:bg-white/50"
+                  }`}
+                >
+                  Food Sets
                 </button>
               </div>
             </div>
@@ -471,6 +492,7 @@ export default function Admin() {
                                     <SelectContent>
                                       <SelectItem value="drink">Drink</SelectItem>
                                       <SelectItem value="food">Food</SelectItem>
+                                      <SelectItem value="food_set">Food Set</SelectItem>
                                     </SelectContent>
                                   </Select>
                                   {editErrors.category && (
@@ -646,17 +668,22 @@ export default function Admin() {
                     <Plus className="h-16 w-16 mx-auto" />
                   ) : activeFilter === "drink" ? (
                     <Coffee className="h-16 w-16 mx-auto" />
-                  ) : (
+                  ) : activeFilter === "food" ? (
                     <UtensilsCrossed className="h-16 w-16 mx-auto" />
+                  ) : (
+                    <Package className="h-16 w-16 mx-auto" />
                   )}
                 </div>
                 <h3 className="text-xl font-medium text-cafe-text-dark mb-2">
-                  No {activeFilter === "all" ? "items" : activeFilter + "s"}{" "}
-                  found
+                  No {activeFilter === "all" ? "items" : 
+                      activeFilter === "food_set" ? "food sets" : 
+                      activeFilter + "s"} found
                 </h3>
                 <p className="text-cafe-text-medium mb-4">
                   {activeFilter === "all"
                     ? "Start by adding your first menu item."
+                    : activeFilter === "food_set"
+                    ? "No food sets have been added yet."
                     : `No ${activeFilter}s have been added yet.`}
                 </p>
                 <Button

@@ -1,11 +1,11 @@
 import { useState } from "react";
-import { ImageOff, Coffee, UtensilsCrossed } from "lucide-react";
+import { ImageOff, Coffee, UtensilsCrossed, Package } from "lucide-react";
 
 interface ImageWithPlaceholderProps {
   src?: string;
   alt: string;
   className?: string;
-  category: 'drink' | 'food';
+  category: 'drink' | 'food' | 'food_set';
   isVisible?: boolean;
 }
 
@@ -37,13 +37,15 @@ export default function ImageWithPlaceholder({
       <div className="text-cafe-text-light mb-2">
         {category === 'drink' ? (
           <Coffee className="h-8 w-8 sm:h-10 sm:w-10" />
-        ) : (
+        ) : category === 'food' ? (
           <UtensilsCrossed className="h-8 w-8 sm:h-10 sm:w-10" />
+        ) : (
+          <Package className="h-8 w-8 sm:h-10 sm:w-10" />
         )}
       </div>
       <div className="text-center px-2">
         <p className="text-cafe-text-medium text-xs sm:text-sm font-medium mb-1">
-          {category === 'drink' ? 'Drink' : 'Food'}
+          {category === 'drink' ? 'Drink' : category === 'food' ? 'Food' : 'Food Set'}
         </p>
         <p className="text-cafe-text-light text-xs flex items-center justify-center gap-1">
           <ImageOff className="h-3 w-3" />
