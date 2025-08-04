@@ -222,138 +222,339 @@ export default function Admin() {
   };
 
   return (
-    <div className="min-h-screen bg-white relative overflow-hidden">
-      {/* Background Image */}
-      <div className="absolute inset-0 opacity-5">
-        <img
-          src="https://api.builder.io/api/v1/image/assets/TEMP/d4d912cb4847166258ac81f8b4ca3abecc963aab?width=2560"
-          alt=""
-          className="w-full h-full object-cover"
-        />
+    <div className="min-h-screen bg-gradient-to-br from-slate-50 via-white to-orange-50/40 relative overflow-hidden">
+      {/* Enhanced Background Elements */}
+      <div className="absolute inset-0 pointer-events-none">
+        {/* Primary Background Image with Better Overlay */}
+        <div className="absolute inset-0 opacity-3">
+          <img
+            src="https://api.builder.io/api/v1/image/assets/TEMP/d4d912cb4847166258ac81f8b4ca3abecc963aab?width=2560"
+            alt=""
+            className="w-full h-full object-cover"
+          />
+        </div>
+        
+        {/* Beautiful Gradient Overlays */}
+        <div className="absolute inset-0 bg-gradient-to-br from-orange-50/60 via-amber-50/40 to-yellow-50/50" />
+        <div className="absolute inset-0 bg-gradient-to-tr from-white/80 via-transparent to-cafe-orange/5" />
+        
+        {/* Modern Mesh Gradient Effects */}
+        <div className="absolute inset-0 opacity-40">
+          <div className="absolute top-0 left-0 w-96 h-96 bg-gradient-to-br from-cafe-orange/15 to-transparent rounded-full blur-3xl animate-pulse" style={{ animationDuration: '8s' }} />
+          <div className="absolute top-1/4 right-0 w-80 h-80 bg-gradient-to-bl from-amber-400/12 to-transparent rounded-full blur-3xl animate-pulse" style={{ animationDelay: '2s', animationDuration: '10s' }} />
+          <div className="absolute bottom-0 left-1/3 w-72 h-72 bg-gradient-to-tr from-yellow-400/15 to-transparent rounded-full blur-3xl animate-pulse" style={{ animationDelay: '4s', animationDuration: '12s' }} />
+          <div className="absolute bottom-1/4 right-1/4 w-64 h-64 bg-gradient-to-tl from-cafe-brown/10 to-transparent rounded-full blur-3xl animate-pulse" style={{ animationDelay: '6s', animationDuration: '9s' }} />
+        </div>
+        
+        {/* Floating Coffee Elements with Enhanced Animation */}
+        <div className="absolute top-16 left-8 w-10 h-10 bg-gradient-to-br from-cafe-brown/25 to-cafe-brown/15 rounded-full animate-bounce shadow-xl backdrop-blur-sm" style={{ animationDelay: '0s', animationDuration: '4s' }} />
+        <div className="absolute top-32 right-16 w-8 h-8 bg-gradient-to-br from-cafe-orange/25 to-amber-400/20 rounded-full animate-bounce shadow-lg backdrop-blur-sm" style={{ animationDelay: '1.5s', animationDuration: '5s' }} />
+        <div className="absolute bottom-32 left-1/5 w-12 h-12 bg-gradient-to-br from-amber-400/20 to-yellow-400/15 rounded-full animate-bounce shadow-xl backdrop-blur-sm" style={{ animationDelay: '3s', animationDuration: '6s' }} />
+        <div className="absolute bottom-16 right-1/4 w-9 h-9 bg-gradient-to-br from-cafe-brown/20 to-cafe-orange/15 rounded-full animate-bounce shadow-lg backdrop-blur-sm" style={{ animationDelay: '0.8s', animationDuration: '4.5s' }} />
+        
+        {/* Geometric Floating Elements */}
+        <div className="absolute top-1/3 left-1/6 w-6 h-6 bg-gradient-to-br from-cafe-orange/20 to-amber-400/15 transform rotate-45 animate-spin shadow-md" style={{ animationDuration: '20s' }} />
+        <div className="absolute bottom-1/3 right-1/6 w-8 h-8 bg-gradient-to-br from-yellow-400/15 to-cafe-brown/12 transform rotate-12 animate-spin shadow-lg" style={{ animationDelay: '5s', animationDuration: '25s' }} />
+        
+        {/* Subtle Pattern Overlay */}
+        <div className="absolute inset-0 opacity-3" style={{
+          backgroundImage: `radial-gradient(circle at 2px 2px, rgba(255,165,0,0.15) 1px, transparent 0)`,
+          backgroundSize: '30px 30px'
+        }} />
+        
+        {/* Elegant Light Rays */}
+        <div className="absolute top-0 left-1/2 transform -translate-x-1/2 w-1 h-40 bg-gradient-to-b from-cafe-orange/20 to-transparent blur-sm opacity-50" />
+        <div className="absolute bottom-0 right-1/3 w-1 h-32 bg-gradient-to-t from-amber-400/15 to-transparent blur-sm opacity-40" />
       </div>
 
       <div className="relative z-10 min-h-screen">
-        {/* Header */}
-        <div className="bg-white/95 backdrop-blur-sm border-b border-gray-100 px-4 py-6">
-          {/* Logo */}
-          <div className="flex justify-center mb-6">
-            <img
-              src="https://api.builder.io/api/v1/image/assets/TEMP/f2aaa14515154ad18f8cfe5439814ab435d6222d?width=793"
-              alt="Chhong Cafe & BBQ Logo"
-              className="w-full max-w-xs sm:max-w-sm md:max-w-md h-auto rounded-[23px] shadow-lg"
-            />
-          </div>
+        {/* Enhanced Header */}
+        <div className="bg-white/90 backdrop-blur-lg border-b border-gradient-to-r from-cafe-orange/20 via-amber-400/15 to-yellow-400/20 px-4 py-8 shadow-xl">
+          {/* Beautiful Header Background */}
+          <div className="absolute inset-0 bg-gradient-to-br from-white/95 via-orange-50/80 to-amber-50/60 backdrop-blur-xl" />
+          <div className="absolute inset-0 bg-gradient-to-r from-transparent via-cafe-orange/5 to-transparent" />
+          
+          <div className="relative z-10">
+            {/* Enhanced Logo Container */}
+            <div className="flex justify-center mb-8">
+              <div className="relative group">
+                {/* Logo Glow Effect */}
+                <div className="absolute inset-0 bg-gradient-to-r from-cafe-orange/20 to-amber-400/20 rounded-[30px] blur-xl group-hover:blur-2xl transition-all duration-500 opacity-60 group-hover:opacity-80" />
+                
+                <img
+                  src="https://api.builder.io/api/v1/image/assets/TEMP/f2aaa14515154ad18f8cfe5439814ab435d6222d?width=793"
+                  alt="Chhong Cafe & BBQ Logo"
+                  className="relative w-full max-w-xs sm:max-w-sm md:max-w-md h-auto rounded-[30px] shadow-2xl group-hover:shadow-3xl transition-all duration-500 ring-2 ring-white/50 group-hover:ring-cafe-orange/30"
+                />
+                
+                {/* Corner Decorations */}
+                <div className="absolute -top-2 -left-2 w-6 h-6 bg-gradient-to-br from-cafe-orange to-amber-400 rounded-full shadow-lg opacity-80" />
+                <div className="absolute -top-2 -right-2 w-4 h-4 bg-gradient-to-br from-amber-400 to-yellow-400 rounded-full shadow-md opacity-70" />
+                <div className="absolute -bottom-2 -left-2 w-4 h-4 bg-gradient-to-br from-yellow-400 to-cafe-orange rounded-full shadow-md opacity-70" />
+                <div className="absolute -bottom-2 -right-2 w-6 h-6 bg-gradient-to-br from-cafe-brown to-cafe-orange rounded-full shadow-lg opacity-80" />
+              </div>
+            </div>
 
-          <h1 className="text-center font-sriracha text-cafe-brown text-3xl sm:text-4xl md:text-5xl mb-4">
-            Admin Panel
-          </h1>
+            {/* Enhanced Title */}
+            <div className="text-center mb-8">
+              <h1 className="font-sriracha text-transparent bg-clip-text bg-gradient-to-r from-cafe-brown via-cafe-orange to-amber-500 text-4xl sm:text-5xl md:text-6xl mb-2 drop-shadow-lg">
+                Admin Panel
+              </h1>
+              <div className="w-32 h-1 bg-gradient-to-r from-cafe-orange to-amber-400 mx-auto rounded-full shadow-sm" />
+              <p className="text-cafe-text-medium font-medium mt-3 text-lg">
+                Manage your beautiful menu
+              </p>
+            </div>
 
-          {/* Navigation */}
-          <div className="flex justify-center gap-4 mb-6">
-            <Button
-              onClick={() => navigate("/qr-menu-chhong_caffe")}
-              variant="outline"
-              className="flex items-center gap-2"
-            >
-              <Eye className="h-4 w-4" />
-              View Menu
-            </Button>
-            <Button
-              onClick={() => navigate("/qr-menu-chhong_caffe/create-item")}
-              className="flex items-center gap-2 bg-cafe-orange hover:bg-cafe-brown"
-            >
-              <Plus className="h-4 w-4" />
-              Add Item
-            </Button>
+            {/* Enhanced Navigation */}
+            <div className="flex justify-center gap-6 mb-6">
+              <Button
+                onClick={() => navigate("/qr-menu-chhong_caffe")}
+                variant="outline"
+                className="flex items-center gap-3 px-6 py-3 bg-white/80 backdrop-blur-sm hover:bg-cafe-orange/10 border-2 border-cafe-orange/30 hover:border-cafe-orange/60 transition-all duration-300 shadow-lg hover:shadow-xl rounded-xl group"
+              >
+                <Eye className="h-5 w-5 group-hover:scale-110 transition-transform duration-300" />
+                <span className="font-semibold">View Menu</span>
+              </Button>
+              <Button
+                onClick={() => navigate("/qr-menu-chhong_caffe/create-item")}
+                className="flex items-center gap-3 px-6 py-3 bg-gradient-to-r from-cafe-orange to-amber-500 hover:from-cafe-brown hover:to-cafe-orange transition-all duration-300 shadow-lg hover:shadow-xl rounded-xl group transform hover:scale-105"
+              >
+                <Plus className="h-5 w-5 group-hover:rotate-90 transition-transform duration-300" />
+                <span className="font-semibold">Add Item</span>
+              </Button>
+            </div>
           </div>
         </div>
 
         {/* Stats Cards */}
-        <div className="px-4 py-6">
+        <div className="px-4 py-8">
           <div className="max-w-6xl mx-auto">
-            <div className="grid grid-cols-1 sm:grid-cols-4 gap-4 mb-6">
-              <Card>
-                <CardContent className="p-4 text-center">
-                  <div className="text-2xl font-bold text-cafe-text-dark">
+            {/* Enhanced Stats Cards */}
+            <div className="grid grid-cols-1 sm:grid-cols-4 gap-6 mb-8">
+              {/* Total Items Card */}
+              <Card className="overflow-hidden group hover:shadow-2xl transition-all duration-500 transform hover:scale-105 bg-gradient-to-br from-white to-gray-50/80 border-0 shadow-xl">
+                <div className="absolute inset-0 bg-gradient-to-br from-slate-500/5 to-gray-600/10 group-hover:from-slate-500/10 group-hover:to-gray-600/15 transition-all duration-500" />
+                <div className="absolute top-0 left-0 right-0 h-1 bg-gradient-to-r from-slate-400 via-gray-500 to-slate-600" />
+                <CardContent className="p-6 text-center relative z-10">
+                  <div className="mb-3">
+                    <Package className="h-8 w-8 text-slate-600 mx-auto group-hover:scale-110 transition-transform duration-300" />
+                  </div>
+                  <div className="text-3xl font-bold text-slate-700 mb-1 group-hover:text-slate-800 transition-colors duration-300">
                     {stats.total}
                   </div>
-                  <div className="text-sm text-cafe-text-medium">
+                  <div className="text-sm font-semibold text-slate-500 group-hover:text-slate-600 transition-colors duration-300">
                     Total Items
                   </div>
                 </CardContent>
+                {/* Floating particles */}
+                <div className="absolute top-4 right-4 w-2 h-2 bg-slate-400 rounded-full opacity-60 group-hover:opacity-100 transition-opacity duration-300" />
+                <div className="absolute bottom-4 left-4 w-1 h-1 bg-gray-500 rounded-full opacity-40 group-hover:opacity-80 transition-opacity duration-300" />
               </Card>
-              <Card>
-                <CardContent className="p-4 text-center">
-                  <div className="text-2xl font-bold text-cafe-orange flex items-center justify-center gap-2">
-                    <Coffee className="h-6 w-6" />
+
+              {/* Drinks Card */}
+              <Card className="overflow-hidden group hover:shadow-2xl transition-all duration-500 transform hover:scale-105 bg-gradient-to-br from-white to-orange-50/60 border-0 shadow-xl">
+                <div className="absolute inset-0 bg-gradient-to-br from-cafe-orange/5 to-amber-400/10 group-hover:from-cafe-orange/10 group-hover:to-amber-400/15 transition-all duration-500" />
+                <div className="absolute top-0 left-0 right-0 h-1 bg-gradient-to-r from-cafe-orange via-amber-400 to-yellow-400" />
+                <CardContent className="p-6 text-center relative z-10">
+                  <div className="mb-3">
+                    <Coffee className="h-8 w-8 text-cafe-orange mx-auto group-hover:scale-110 transition-transform duration-300" />
+                  </div>
+                  <div className="text-3xl font-bold text-cafe-orange mb-1 group-hover:text-cafe-brown transition-colors duration-300">
                     {stats.drinks}
                   </div>
-                  <div className="text-sm text-cafe-text-medium">Drinks</div>
+                  <div className="text-sm font-semibold text-cafe-text-medium group-hover:text-cafe-text-dark transition-colors duration-300">
+                    Drinks
+                  </div>
                 </CardContent>
+                {/* Coffee steam effect */}
+                <div className="absolute top-3 right-5 w-1 h-4 bg-gradient-to-t from-cafe-orange/30 to-transparent rounded-full opacity-60 group-hover:opacity-100 transition-opacity duration-300" />
+                <div className="absolute top-3 right-3 w-1 h-6 bg-gradient-to-t from-amber-400/30 to-transparent rounded-full opacity-60 group-hover:opacity-100 transition-opacity duration-300" style={{ animationDelay: '0.5s' }} />
               </Card>
-              <Card>
-                <CardContent className="p-4 text-center">
-                  <div className="text-2xl font-bold text-cafe-brown flex items-center justify-center gap-2">
-                    <UtensilsCrossed className="h-6 w-6" />
+
+              {/* Foods Card */}
+              <Card className="overflow-hidden group hover:shadow-2xl transition-all duration-500 transform hover:scale-105 bg-gradient-to-br from-white to-yellow-50/60 border-0 shadow-xl">
+                <div className="absolute inset-0 bg-gradient-to-br from-yellow-400/5 to-amber-500/10 group-hover:from-yellow-400/10 group-hover:to-amber-500/15 transition-all duration-500" />
+                <div className="absolute top-0 left-0 right-0 h-1 bg-gradient-to-r from-yellow-400 via-amber-500 to-orange-400" />
+                <CardContent className="p-6 text-center relative z-10">
+                  <div className="mb-3">
+                    <UtensilsCrossed className="h-8 w-8 text-amber-600 mx-auto group-hover:scale-110 transition-transform duration-300" />
+                  </div>
+                  <div className="text-3xl font-bold text-amber-600 mb-1 group-hover:text-amber-700 transition-colors duration-300">
                     {stats.foods}
                   </div>
-                  <div className="text-sm text-cafe-text-medium">Foods</div>
+                  <div className="text-sm font-semibold text-amber-500 group-hover:text-amber-600 transition-colors duration-300">
+                    Foods
+                  </div>
                 </CardContent>
+                {/* Food sparkles */}
+                <div className="absolute top-4 right-4 w-2 h-2 bg-yellow-400 rounded-full opacity-60 group-hover:opacity-100 transition-opacity duration-300 animate-pulse" />
+                <div className="absolute bottom-4 left-5 w-1 h-1 bg-amber-500 rounded-full opacity-60 group-hover:opacity-100 transition-opacity duration-300 animate-pulse" style={{ animationDelay: '1s' }} />
               </Card>
-              <Card>
-                <CardContent className="p-4 text-center">
-                  <div className="text-2xl font-bold text-cafe-brown flex items-center justify-center gap-2">
-                    <Package className="h-6 w-6" />
+
+              {/* Food Sets Card */}
+              <Card className="overflow-hidden group hover:shadow-2xl transition-all duration-500 transform hover:scale-105 bg-gradient-to-br from-white to-orange-50/60 border-0 shadow-xl">
+                <div className="absolute inset-0 bg-gradient-to-br from-cafe-brown/5 to-orange-600/10 group-hover:from-cafe-brown/10 group-hover:to-orange-600/15 transition-all duration-500" />
+                <div className="absolute top-0 left-0 right-0 h-1 bg-gradient-to-r from-cafe-brown via-orange-500 to-red-400" />
+                <CardContent className="p-6 text-center relative z-10">
+                  <div className="mb-3">
+                    <Package className="h-8 w-8 text-cafe-brown mx-auto group-hover:scale-110 transition-transform duration-300" />
+                  </div>
+                  <div className="text-3xl font-bold text-cafe-brown mb-1 group-hover:text-orange-700 transition-colors duration-300">
                     {stats.foodSets}
                   </div>
-                  <div className="text-sm text-cafe-text-medium">Food Sets</div>
+                  <div className="text-sm font-semibold text-cafe-text-medium group-hover:text-cafe-text-dark transition-colors duration-300">
+                    Food Sets
+                  </div>
                 </CardContent>
+                {/* Set indicators */}
+                <div className="absolute top-4 right-4 w-2 h-2 bg-cafe-brown rounded-full opacity-60 group-hover:opacity-100 transition-opacity duration-300" />
+                <div className="absolute top-5 right-6 w-1 h-1 bg-orange-500 rounded-full opacity-60 group-hover:opacity-100 transition-opacity duration-300" />
+                <div className="absolute bottom-4 left-4 w-1 h-1 bg-red-400 rounded-full opacity-60 group-hover:opacity-100 transition-opacity duration-300" />
               </Card>
             </div>
 
-            {/* Filter Tabs */}
-            <div className="flex justify-center mb-6">
-              <div className="bg-cafe-bg-light rounded-[20px] p-1">
-                <button
-                  onClick={() => setActiveFilter("all")}
-                  className={`px-6 py-2 rounded-[16px] font-medium transition-all ${
+            {/* Enhanced Filter Tabs */}
+            <div className="flex justify-center mb-8">
+              <div className="relative bg-gradient-to-r from-white via-gray-50/80 to-white rounded-[30px] p-2 shadow-2xl hover:shadow-3xl transition-all duration-500 ring-1 ring-gray-200/60 hover:ring-cafe-orange/30 backdrop-blur-sm">
+                {/* Enhanced background with multiple layers */}
+                <div className="absolute inset-0 bg-gradient-to-r from-gray-50/60 via-white/90 to-gray-50/60 rounded-[30px]" />
+                <div className="absolute inset-0 bg-gradient-to-br from-orange-50/20 via-transparent to-amber-50/20 rounded-[30px]" />
+                
+                {/* Enhanced animated background slider */}
+                <div
+                  className={`absolute top-2 h-[53px] bg-gradient-to-r from-cafe-orange via-amber-500 to-yellow-400 rounded-[25px] transition-all duration-700 ease-out shadow-2xl ${
                     activeFilter === "all"
-                      ? "bg-cafe-orange text-white shadow-md"
-                      : "text-cafe-text-dark hover:bg-white/50"
+                      ? "w-[calc(25%-4px)] translate-x-1"
+                      : activeFilter === "drink"
+                      ? "w-[calc(25%-4px)] translate-x-[calc(100%+1px)]"
+                      : activeFilter === "food"
+                      ? "w-[calc(25%-4px)] translate-x-[calc(200%+2px)]"
+                      : "w-[calc(25%-4px)] translate-x-[calc(300%+3px)]"
                   }`}
                 >
-                  All Items
-                </button>
-                <button
-                  onClick={() => setActiveFilter("drink")}
-                  className={`px-6 py-2 rounded-[16px] font-medium transition-all ${
-                    activeFilter === "drink"
-                      ? "bg-cafe-orange text-white shadow-md"
-                      : "text-cafe-text-dark hover:bg-white/50"
-                  }`}
-                >
-                  Drinks
-                </button>
-                <button
-                  onClick={() => setActiveFilter("food")}
-                  className={`px-6 py-2 rounded-[16px] font-medium transition-all ${
-                    activeFilter === "food"
-                      ? "bg-cafe-orange text-white shadow-md"
-                      : "text-cafe-text-dark hover:bg-white/50"
-                  }`}
-                >
-                  Foods
-                </button>
-                <button
-                  onClick={() => setActiveFilter("food_set")}
-                  className={`px-6 py-2 rounded-[16px] font-medium transition-all ${
-                    activeFilter === "food_set"
-                      ? "bg-cafe-orange text-white shadow-md"
-                      : "text-cafe-text-dark hover:bg-white/50"
-                  }`}
-                >
-                  Food Sets
-                </button>
+                  {/* Multiple glowing effects */}
+                  <div className="absolute inset-0 bg-gradient-to-r from-white/30 via-white/20 to-white/30 rounded-[25px]" />
+                  <div className="absolute inset-0 bg-gradient-to-t from-black/5 via-transparent to-white/15 rounded-[25px]" />
+                  <div className="absolute inset-0 bg-gradient-to-br from-cafe-orange/50 via-transparent to-amber-400/50 rounded-[25px] blur-sm" />
+                  
+                  {/* Active button shimmer effect */}
+                  <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/40 to-transparent rounded-[25px] animate-pulse" />
+                </div>
+                
+                {/* Enhanced buttons container */}
+                <div className="relative flex">
+                  <button
+                    onClick={() => setActiveFilter("all")}
+                    className={`flex-1 px-4 py-4 font-bold text-sm transition-all duration-700 rounded-[23px] relative overflow-hidden group ${
+                      activeFilter === "all"
+                        ? "text-white transform scale-105 shadow-lg"
+                        : "text-gray-700 hover:text-cafe-orange hover:scale-105"
+                    }`}
+                  >
+                    {/* Enhanced button hover effect */}
+                    <div className="absolute inset-0 bg-gradient-to-r from-cafe-orange/15 via-amber-400/10 to-yellow-400/15 opacity-0 group-hover:opacity-100 transition-opacity duration-500 rounded-[23px]" />
+                    <div className="absolute inset-0 bg-gradient-to-br from-white/10 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 rounded-[23px]" />
+                    
+                    <div className="flex items-center gap-2 justify-center relative z-10">
+                      <Package className="h-4 w-4 group-hover:rotate-12 transition-transform duration-300" />
+                      <span className="whitespace-nowrap">All Items</span>
+                    </div>
+                    
+                    {/* Enhanced active indicator */}
+                    {activeFilter === "all" && (
+                      <div className="absolute bottom-2 left-1/2 transform -translate-x-1/2 w-10 h-1 bg-white/60 rounded-full animate-pulse shadow-lg" />
+                    )}
+                    
+                    {/* Corner glow for active state */}
+                    {activeFilter === "all" && (
+                      <div className="absolute top-1 right-1 w-2 h-2 bg-white/50 rounded-full animate-pulse" />
+                    )}
+                  </button>
+                  
+                  <button
+                    onClick={() => setActiveFilter("drink")}
+                    className={`flex-1 px-4 py-4 font-bold text-sm transition-all duration-700 rounded-[23px] relative overflow-hidden group ${
+                      activeFilter === "drink"
+                        ? "text-white transform scale-105 shadow-lg"
+                        : "text-gray-700 hover:text-cafe-orange hover:scale-105"
+                    }`}
+                  >
+                    <div className="absolute inset-0 bg-gradient-to-r from-cafe-orange/15 via-amber-400/10 to-yellow-400/15 opacity-0 group-hover:opacity-100 transition-opacity duration-500 rounded-[23px]" />
+                    <div className="absolute inset-0 bg-gradient-to-br from-white/10 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 rounded-[23px]" />
+                    
+                    <div className="flex items-center gap-2 justify-center relative z-10">
+                      <Coffee className="h-4 w-4 group-hover:rotate-12 transition-transform duration-300" />
+                      <span className="whitespace-nowrap">Drinks</span>
+                    </div>
+                    
+                    {activeFilter === "drink" && (
+                      <div className="absolute bottom-2 left-1/2 transform -translate-x-1/2 w-10 h-1 bg-white/60 rounded-full animate-pulse shadow-lg" />
+                    )}
+                    
+                    {activeFilter === "drink" && (
+                      <div className="absolute top-1 right-1 w-2 h-2 bg-white/50 rounded-full animate-pulse" />
+                    )}
+                  </button>
+                  
+                  <button
+                    onClick={() => setActiveFilter("food")}
+                    className={`flex-1 px-4 py-4 font-bold text-sm transition-all duration-700 rounded-[23px] relative overflow-hidden group ${
+                      activeFilter === "food"
+                        ? "text-white transform scale-105 shadow-lg"
+                        : "text-gray-700 hover:text-cafe-orange hover:scale-105"
+                    }`}
+                  >
+                    <div className="absolute inset-0 bg-gradient-to-r from-cafe-orange/15 via-amber-400/10 to-yellow-400/15 opacity-0 group-hover:opacity-100 transition-opacity duration-500 rounded-[23px]" />
+                    <div className="absolute inset-0 bg-gradient-to-br from-white/10 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 rounded-[23px]" />
+                    
+                    <div className="flex items-center gap-2 justify-center relative z-10">
+                      <UtensilsCrossed className="h-4 w-4 group-hover:rotate-12 transition-transform duration-300" />
+                      <span className="whitespace-nowrap">Foods</span>
+                    </div>
+                    
+                    {activeFilter === "food" && (
+                      <div className="absolute bottom-2 left-1/2 transform -translate-x-1/2 w-10 h-1 bg-white/60 rounded-full animate-pulse shadow-lg" />
+                    )}
+                    
+                    {activeFilter === "food" && (
+                      <div className="absolute top-1 right-1 w-2 h-2 bg-white/50 rounded-full animate-pulse" />
+                    )}
+                  </button>
+                  
+                  <button
+                    onClick={() => setActiveFilter("food_set")}
+                    className={`flex-1 px-4 py-4 font-bold text-sm transition-all duration-700 rounded-[23px] relative overflow-hidden group ${
+                      activeFilter === "food_set"
+                        ? "text-white transform scale-105 shadow-lg"
+                        : "text-gray-700 hover:text-cafe-orange hover:scale-105"
+                    }`}
+                  >
+                    <div className="absolute inset-0 bg-gradient-to-r from-cafe-orange/15 via-amber-400/10 to-yellow-400/15 opacity-0 group-hover:opacity-100 transition-opacity duration-500 rounded-[23px]" />
+                    <div className="absolute inset-0 bg-gradient-to-br from-white/10 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 rounded-[23px]" />
+                    
+                    <div className="flex items-center gap-2 justify-center relative z-10">
+                      <Package className="h-4 w-4 group-hover:rotate-12 transition-transform duration-300" />
+                      <span className="whitespace-nowrap">Food Sets</span>
+                    </div>
+                    
+                    {activeFilter === "food_set" && (
+                      <div className="absolute bottom-2 left-1/2 transform -translate-x-1/2 w-10 h-1 bg-white/60 rounded-full animate-pulse shadow-lg" />
+                    )}
+                    
+                    {activeFilter === "food_set" && (
+                      <div className="absolute top-1 right-1 w-2 h-2 bg-white/50 rounded-full animate-pulse" />
+                    )}
+                  </button>
+                </div>
+                
+                {/* Enhanced shine effects */}
+                <div className="absolute top-0 left-0 right-0 h-2 bg-gradient-to-r from-transparent via-white/40 to-transparent rounded-t-[30px]" />
+                <div className="absolute bottom-0 left-0 right-0 h-1 bg-gradient-to-r from-transparent via-gray-200/30 to-transparent rounded-b-[30px]" />
+                
+                {/* Floating sparkles */}
+                <div className="absolute top-4 left-4 w-1 h-1 bg-cafe-orange/40 rounded-full animate-pulse" style={{ animationDelay: '0s', animationDuration: '2s' }} />
+                <div className="absolute bottom-4 right-4 w-1 h-1 bg-amber-400/40 rounded-full animate-pulse" style={{ animationDelay: '1s', animationDuration: '3s' }} />
               </div>
             </div>
 
@@ -383,50 +584,78 @@ export default function Admin() {
 
             {/* Items Grid */}
             {!loading && (
-              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4">
+              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
                 {filteredItems.map((item) => (
                   <Card
                     key={item.id}
-                    className="overflow-hidden hover:shadow-lg transition-shadow"
+                    className="overflow-hidden hover:shadow-xl transition-all duration-500 bg-white rounded-[20px] shadow-lg hover:scale-[1.02] group relative border-0"
                   >
-                    <div className="aspect-[174/119] overflow-hidden relative">
+                    {/* Top gradient bar */}
+                    <div className="absolute top-0 left-0 right-0 h-1 bg-gradient-to-r from-cafe-orange via-yellow-400 to-cafe-brown opacity-80 group-hover:opacity-100 transition-opacity duration-300" />
+                    
+                    {/* Image Container */}
+                    <div className="aspect-square overflow-hidden relative bg-gray-50">
                       <ImageWithPlaceholder
                         src={item.image}
                         alt={item.name}
                         category={item.category}
                         isVisible={true}
-                        className="w-full h-full"
+                        className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
                       />
+                      {/* Overlay gradient for better text readability */}
+                      <div className="absolute inset-0 bg-gradient-to-t from-black/10 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+                      
+                      {/* Category badge */}
+                      <div className="absolute top-3 left-3 bg-white/90 backdrop-blur-sm px-2 py-1 rounded-full text-xs font-semibold text-cafe-text-dark">
+                        {item.category === "food_set" ? "Food Set" : item.category}
+                      </div>
                     </div>
-                    <CardContent className="p-4">
-                      <h3 className="font-bold text-lg text-cafe-text-dark mb-2 truncate">
-                        {item.name}
-                      </h3>
-                      <div className="space-y-1 mb-4">
-                        <p className="text-sm text-cafe-text-light">
-                          Size: {item.size}
-                        </p>
-                        <p className="text-sm text-cafe-text-medium">
-                          Price: {item.price}$
-                        </p>
-                        <p className="text-xs text-cafe-text-light capitalize">
-                          Category: {item.category}
-                        </p>
+                    
+                    {/* Content Container */}
+                    <CardContent className="p-4 bg-gradient-to-b from-white to-gray-50/80 flex-1 flex flex-col justify-between min-h-[160px]">
+                      {/* Title */}
+                      <div className="flex-shrink-0 mb-3">
+                        <h3 className="font-poppins font-bold text-lg text-cafe-text-dark text-center leading-tight h-12 flex items-center justify-center">
+                          {item.name}
+                        </h3>
+                      </div>
+                      
+                      {/* Details */}
+                      <div className="space-y-2 mb-4">
+                        <div className="bg-white/60 rounded-lg p-2 backdrop-blur-sm">
+                          <div className="flex items-center justify-between text-sm">
+                            <div className="flex items-center gap-1">
+                              <span className="text-cafe-text-light font-medium">Size:</span>
+                              <span className="text-cafe-text-dark font-semibold bg-cafe-orange/10 px-2 py-0.5 rounded-full text-xs">
+                                {item.size}
+                              </span>
+                            </div>
+                            <div className="flex items-center gap-1">
+                              <span className="text-cafe-text-light font-medium">Price:</span>
+                              <span className="text-cafe-orange font-bold text-lg">
+                                ${item.price}
+                              </span>
+                            </div>
+                          </div>
+                        </div>
+                        
                         {item.description && (
-                          <p className="text-xs text-cafe-text-light truncate">
-                            {item.description}
-                          </p>
+                          <div className="bg-gray-50/80 rounded-lg p-2">
+                            <p className="text-xs text-cafe-text-light leading-relaxed line-clamp-2">
+                              {item.description}
+                            </p>
+                          </div>
                         )}
                       </div>
 
                       {/* Action Buttons */}
-                      <div className="flex gap-2">
+                      <div className="flex gap-2 mt-auto">
                         <Dialog>
                           <DialogTrigger asChild>
                             <Button
                               variant="outline"
                               size="sm"
-                              className="flex-1"
+                              className="flex-1 hover:bg-cafe-orange/10 hover:border-cafe-orange transition-all duration-300"
                               onClick={() => handleEditClick(item)}
                             >
                               <Edit className="h-4 w-4 mr-1" />
@@ -626,7 +855,7 @@ export default function Admin() {
                             <Button
                               variant="destructive"
                               size="sm"
-                              className="flex-1"
+                              className="flex-1 hover:bg-red-600 transition-all duration-300"
                             >
                               <Trash2 className="h-4 w-4 mr-1" />
                               Delete
@@ -655,6 +884,12 @@ export default function Admin() {
                         </AlertDialog>
                       </div>
                     </CardContent>
+                    
+                    {/* Hover border effect */}
+                    <div className="absolute inset-0 rounded-[20px] ring-2 ring-cafe-orange/0 group-hover:ring-cafe-orange/30 pointer-events-none transition-all duration-300"></div>
+                    
+                    {/* Corner accent */}
+                    <div className="absolute top-4 right-4 w-3 h-3 bg-cafe-orange rounded-full opacity-0 group-hover:opacity-100 transition-opacity duration-300 shadow-lg"></div>
                   </Card>
                 ))}
               </div>

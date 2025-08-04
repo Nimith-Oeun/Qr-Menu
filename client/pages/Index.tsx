@@ -181,97 +181,234 @@ export default function Index() {
   );
 
   return (
-    <div className="min-h-screen bg-white relative overflow-hidden">
-      {/* Background Image */}
-      <div className="absolute inset-0 opacity-20">
-        <img
-          src="https://api.builder.io/api/v1/image/assets/TEMP/d4d912cb4847166258ac81f8b4ca3abecc963aab?width=2560"
-          alt=""
-          className="w-full h-full object-cover"
-        />
-      </div>
-
-      {/* Fixed Menu Header */}
-      <div
-        className={`z-50 transition-all duration-300 ${
-          isScrolled
-            ? "fixed top-[-230px] left-0 right-0 bg-white/98 backdrop-blur-md shadow-lg border-b border-gray-200"
-            : "bg-white/95 backdrop-blur-sm border-b border-gray-100"
-        }`}
-      >
-        {/* Logo */}
-        <div className="flex justify-center px-4 mb-6">
+    <div className="min-h-screen bg-gradient-to-br from-slate-50 via-white to-orange-50/40 relative overflow-hidden">
+      {/* Enhanced Background Elements */}
+      <div className="absolute inset-0 pointer-events-none">
+        {/* Primary Background Image with Better Overlay */}
+        <div className="absolute inset-0 opacity-3">
           <img
-            src="https://api.builder.io/api/v1/image/assets/TEMP/f2aaa14515154ad18f8cfe5439814ab435d6222d?width=793"
-            alt="Chhong Cafe & BBQ Logo"
-            className="w-full max-w-xs sm:max-w-sm md:max-w-md h-auto rounded-[23px] shadow-lg"
+            src="https://api.builder.io/api/v1/image/assets/TEMP/d4d912cb4847166258ac81f8b4ca3abecc963aab?width=2560"
+            alt=""
+            className="w-full h-full object-cover"
           />
         </div>
+        
+        {/* Beautiful Gradient Overlays */}
+        <div className="absolute inset-0 bg-gradient-to-br from-orange-50/60 via-amber-50/40 to-yellow-50/50" />
+        <div className="absolute inset-0 bg-gradient-to-tr from-white/80 via-transparent to-cafe-orange/5" />
+        
+        {/* Modern Mesh Gradient Effects */}
+        <div className="absolute inset-0 opacity-40">
+          <div className="absolute top-0 left-0 w-96 h-96 bg-gradient-to-br from-cafe-orange/15 to-transparent rounded-full blur-3xl animate-pulse" style={{ animationDuration: '8s' }} />
+          <div className="absolute top-1/4 right-0 w-80 h-80 bg-gradient-to-bl from-amber-400/12 to-transparent rounded-full blur-3xl animate-pulse" style={{ animationDelay: '2s', animationDuration: '10s' }} />
+          <div className="absolute bottom-0 left-1/3 w-72 h-72 bg-gradient-to-tr from-yellow-400/15 to-transparent rounded-full blur-3xl animate-pulse" style={{ animationDelay: '4s', animationDuration: '12s' }} />
+          <div className="absolute bottom-1/4 right-1/4 w-64 h-64 bg-gradient-to-tl from-cafe-brown/10 to-transparent rounded-full blur-3xl animate-pulse" style={{ animationDelay: '6s', animationDuration: '9s' }} />
+        </div>
+        
+        {/* Floating Coffee Elements with Enhanced Animation */}
+        <div className="absolute top-16 left-8 w-10 h-10 bg-gradient-to-br from-cafe-brown/25 to-cafe-brown/15 rounded-full animate-bounce shadow-xl backdrop-blur-sm" style={{ animationDelay: '0s', animationDuration: '4s' }} />
+        <div className="absolute top-32 right-16 w-8 h-8 bg-gradient-to-br from-cafe-orange/25 to-amber-400/20 rounded-full animate-bounce shadow-lg backdrop-blur-sm" style={{ animationDelay: '1.5s', animationDuration: '5s' }} />
+        <div className="absolute bottom-32 left-1/5 w-12 h-12 bg-gradient-to-br from-amber-400/20 to-yellow-400/15 rounded-full animate-bounce shadow-xl backdrop-blur-sm" style={{ animationDelay: '3s', animationDuration: '6s' }} />
+        <div className="absolute bottom-16 right-1/4 w-9 h-9 bg-gradient-to-br from-cafe-brown/20 to-cafe-orange/15 rounded-full animate-bounce shadow-lg backdrop-blur-sm" style={{ animationDelay: '0.8s', animationDuration: '4.5s' }} />
+        
+        {/* Geometric Floating Elements */}
+        <div className="absolute top-1/3 left-1/6 w-6 h-6 bg-gradient-to-br from-cafe-orange/20 to-amber-400/15 transform rotate-45 animate-spin shadow-md" style={{ animationDuration: '20s' }} />
+        <div className="absolute bottom-1/3 right-1/6 w-8 h-8 bg-gradient-to-br from-yellow-400/15 to-cafe-brown/12 transform rotate-12 animate-spin shadow-lg" style={{ animationDelay: '5s', animationDuration: '25s' }} />
+        
+        {/* Subtle Pattern Overlay */}
+        <div className="absolute inset-0 opacity-3" style={{
+          backgroundImage: `radial-gradient(circle at 2px 2px, rgba(255,165,0,0.15) 1px, transparent 0)`,
+          backgroundSize: '30px 30px'
+        }} />
+        
+        {/* Elegant Light Rays */}
+        <div className="absolute top-0 left-1/2 transform -translate-x-1/2 w-1 h-40 bg-gradient-to-b from-cafe-orange/20 to-transparent blur-sm opacity-50" />
+        <div className="absolute bottom-0 right-1/3 w-1 h-32 bg-gradient-to-t from-amber-400/15 to-transparent blur-sm opacity-40" />
+      </div>
 
-        {isScrolled && (
-          <div className="h-1 bg-gradient-to-r from-cafe-orange via-cafe-brown to-cafe-orange animate-pulse"></div>
-        )}
+      {/* Enhanced Fixed Menu Header */}
+      <div
+        className={`z-50 transition-all duration-500 ${
+          isScrolled
+            ? "fixed transition-all duration-500 top-[-230px] left-0 right-0 bg-white/95 backdrop-blur-xl shadow-2xl border-b border-gradient-to-r from-cafe-orange/20 via-amber-400/15 to-yellow-400/20"
+            : "bg-white/90 backdrop-blur-lg border-b border-gradient-to-r from-cafe-orange/20 via-amber-400/15 to-yellow-400/20 shadow-xl"
+        }`}
+      >
+        {/* Beautiful Header Background */}
+        <div className="absolute inset-0 bg-gradient-to-br from-white/95 via-orange-50/80 to-amber-50/60 backdrop-blur-xl" />
+        <div className="absolute inset-0 bg-gradient-to-r from-transparent via-cafe-orange/5 to-transparent" />
+        
+        <div className="relative z-10">
+          {/* Enhanced Logo Container */}
+          <div className="flex justify-center px-4 mb-6">
+            <div className="relative group">
+              {/* Logo Glow Effect */}
+              <div className="absolute inset-0 bg-gradient-to-r from-cafe-orange/20 to-amber-400/20 rounded-[30px] blur-xl group-hover:blur-2xl transition-all duration-500 opacity-60 group-hover:opacity-80" />
+              
+              <img
+                src="https://api.builder.io/api/v1/image/assets/TEMP/f2aaa14515154ad18f8cfe5439814ab435d6222d?width=793"
+                alt="Chhong Cafe & BBQ Logo"
+                className="relative w-full max-w-xs sm:max-w-sm md:max-w-md h-auto rounded-[30px] shadow-2xl group-hover:shadow-3xl transition-all duration-500 ring-2 ring-white/50 group-hover:ring-cafe-orange/30"
+              />
+              
+              {/* Corner Decorations */}
+              <div className="absolute -top-2 -left-2 w-6 h-6 bg-gradient-to-br from-cafe-orange to-amber-400 rounded-full shadow-lg opacity-80" />
+              <div className="absolute -top-2 -right-2 w-4 h-4 bg-gradient-to-br from-amber-400 to-yellow-400 rounded-full shadow-md opacity-70" />
+              <div className="absolute -bottom-2 -left-2 w-4 h-4 bg-gradient-to-br from-yellow-400 to-cafe-orange rounded-full shadow-md opacity-70" />
+              <div className="absolute -bottom-2 -right-2 w-6 h-6 bg-gradient-to-br from-cafe-brown to-cafe-orange rounded-full shadow-lg opacity-80" />
+            </div>
+          </div>
 
-        <h1
-          className={`text-center font-sriracha text-cafe-brown mb-4 transition-all duration-300 ${
-            isScrolled
-              ? "text-2xl sm:text-3xl md:text-4xl"
-              : "text-3xl sm:text-4xl md:text-5xl"
-          }`}
-        >
-          Menu
-        </h1>
+          {isScrolled && (
+            <div className="h-1 bg-gradient-to-r from-cafe-orange via-cafe-brown to-cafe-orange animate-pulse shadow-lg"></div>
+          )}
 
-        <div className="flex justify-center">
+          {/* Enhanced Title */}
+          <div className="text-center mb-2">
+            <h1
+              className={`font-sriracha text-transparent bg-clip-text bg-gradient-to-r from-cafe-brown via-cafe-orange to-amber-500 drop-shadow-lg transition-all duration-500 ${
+                isScrolled
+                  ? "text-2xl sm:text-3xl md:text-4xl"
+                  : "text-4xl sm:text-5xl md:text-6xl"
+              }`}
+            >
+              Menu
+            </h1>
+            <div className="w-24 h-1 bg-gradient-to-r from-cafe-orange to-amber-400 mx-auto rounded-full shadow-sm" />
+            {/* <p className="text-cafe-text-medium font-medium mt-2 text-sm sm:text-base">
+              Explore our delicious offerings
+            </p> */}
+          </div>
+        </div>
+
+        <div className="flex justify-center px-4">
           <div
-            className={`relative bg-cafe-bg-light rounded-[20px] h-[58px] w-[420px] max-w-full p-[3px] transition-all duration-300 ${
-              isScrolled ? "shadow-md ring-2 ring-cafe-orange/20" : ""
+            className={`relative bg-gradient-to-r from-white via-gray-50/80 to-white rounded-[30px] h-[58px] sm:h-[68px] w-full max-w-[380px] sm:max-w-[450px] p-2 transition-all duration-500 shadow-2xl hover:shadow-3xl ring-1 ring-gray-200/60 hover:ring-cafe-orange/30 backdrop-blur-sm ${
+              isScrolled 
+                ? "ring-2 ring-cafe-orange/30 shadow-xl bg-gradient-to-r from-cafe-orange/5 via-white to-cafe-orange/5" 
+                : ""
             }`}
           >
+            {/* Enhanced background with multiple layers */}
+            <div className="absolute inset-0 bg-gradient-to-r from-gray-50/60 via-white/90 to-gray-50/60 rounded-[30px]" />
+            <div className="absolute inset-0 bg-gradient-to-br from-orange-50/20 via-transparent to-amber-50/20 rounded-[30px]" />
+            
+            {/* Enhanced animated background slider */}
             <div
-              className={`absolute top-[3px] w-[calc(33.333%-2px)] h-[53px] bg-cafe-orange rounded-[20px] transition-transform duration-300 ${
+              className={`absolute top-1 left-1 w-[calc(33.333%-4px)] h-[50px] sm:h-[60px] bg-gradient-to-r from-cafe-orange via-amber-500 to-yellow-400 rounded-[25px] transition-all duration-700 ease-out shadow-2xl ${
                 activeTab === "food"
-                  ? "translate-x-[calc(100%+2px)]"
+                  ? "translate-x-[calc(100%+2px)] shadow-orange-300/50"
                   : activeTab === "food_set"
-                    ? "translate-x-[calc(200%+4px)]"
-                    : "translate-x-0"
+                    ? "translate-x-[calc(200%+4px)] shadow-amber-300/50"
+                    : "translate-x-[2px] shadow-orange-300/50"
               }`}
-            />
+            >
+              {/* Multiple glowing effects */}
+              <div className="absolute inset-0 bg-gradient-to-r from-white/30 via-white/20 to-white/30 rounded-[25px]" />
+              <div className="absolute inset-0 bg-gradient-to-t from-black/5 via-transparent to-white/15 rounded-[25px]" />
+              <div className="absolute inset-0 bg-gradient-to-br from-cafe-orange/50 via-transparent to-amber-400/50 rounded-[25px] blur-sm" />
+              
+              {/* Active button shimmer effect */}
+              <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/40 to-transparent rounded-[25px] animate-pulse" />
+            </div>
+            
+            {/* Enhanced buttons container */}
             <div className="relative flex h-full">
               <button
                 onClick={() => {
                   setActiveTab("drink");
                   setVisibleItems(new Set());
                 }}
-                className={`flex-1 flex items-center justify-center font-poppins font-bold text-sm sm:text-lg transition-colors duration-300 ${
-                  activeTab === "drink" ? "text-white" : "text-black"
+                className={`flex-1 flex items-center justify-center font-poppins font-bold text-xs sm:text-sm md:text-base transition-all duration-700 rounded-[23px] relative overflow-hidden group ${
+                  activeTab === "drink" 
+                    ? "text-white transform scale-105 shadow-lg" 
+                    : "text-gray-700 hover:text-cafe-orange hover:scale-105"
                 }`}
               >
-                Drink
+                {/* Enhanced button hover effect */}
+                <div className="absolute inset-0 bg-gradient-to-r from-cafe-orange/15 via-amber-400/10 to-yellow-400/15 opacity-0 group-hover:opacity-100 transition-opacity duration-500 rounded-[23px]" />
+                <div className="absolute inset-0 bg-gradient-to-br from-white/10 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 rounded-[23px]" />
+                
+                {/* Icon and text */}
+                <div className="flex items-center gap-1 sm:gap-2 relative z-10">
+                  <span className="font-khmer text-base sm:text-sm group-hover:scale-110 transition-transform duration-300">ភេសជ្ជៈ</span>
+                </div>
+                
+                {/* Enhanced active indicator */}
+                {activeTab === "drink" && (
+                  <div className="absolute bottom-2 left-1/2 transform -translate-x-1/2 w-8 sm:w-10 h-1 bg-white/60 rounded-full animate-pulse shadow-lg" />
+                )}
+                
+                {/* Corner glow for active state */}
+                {activeTab === "drink" && (
+                  <div className="absolute top-1 right-1 w-2 h-2 bg-white/50 rounded-full animate-pulse" />
+                )}
               </button>
+              
               <button
                 onClick={() => {
                   setActiveTab("food");
                   setVisibleItems(new Set());
                 }}
-                className={`flex-1 flex items-center justify-center font-poppins font-bold text-sm sm:text-lg transition-colors duration-300 ${
-                  activeTab === "food" ? "text-white" : "text-black"
+                className={`flex-1 flex items-center justify-center font-poppins font-bold text-xs sm:text-sm md:text-base transition-all duration-700 rounded-[23px] relative overflow-hidden group ${
+                  activeTab === "food" 
+                    ? "text-white transform scale-105 shadow-lg" 
+                    : "text-gray-700 hover:text-cafe-orange hover:scale-105"
                 }`}
               >
-                Food
+                <div className="absolute inset-0 bg-gradient-to-r from-cafe-orange/15 via-amber-400/10 to-yellow-400/15 opacity-0 group-hover:opacity-100 transition-opacity duration-500 rounded-[23px]" />
+                <div className="absolute inset-0 bg-gradient-to-br from-white/10 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 rounded-[23px]" />
+                
+                {/* Icon and text */}
+                <div className="flex items-center gap-1 sm:gap-2 relative z-10">
+                  <span className="font-khmer text-base sm:text-sm group-hover:scale-110 transition-transform duration-300">អាហារ</span>
+                </div>
+                
+                {activeTab === "food" && (
+                  <div className="absolute bottom-2 left-1/2 transform -translate-x-1/2 w-8 sm:w-10 h-1 bg-white/60 rounded-full animate-pulse shadow-lg" />
+                )}
+                
+                {activeTab === "food" && (
+                  <div className="absolute top-1 right-1 w-2 h-2 bg-white/50 rounded-full animate-pulse" />
+                )}
               </button>
+              
               <button
                 onClick={() => {
                   setActiveTab("food_set");
                   setVisibleItems(new Set());
                 }}
-                className={`flex-1 flex items-center justify-center font-poppins font-bold text-sm sm:text-lg transition-colors duration-300 ${
-                  activeTab === "food_set" ? "text-white" : "text-black"
+                className={`flex-1 flex items-center justify-center font-poppins font-bold text-xs sm:text-sm md:text-base transition-all duration-700 rounded-[23px] relative overflow-hidden group ${
+                  activeTab === "food_set" 
+                    ? "text-white transform scale-105 shadow-lg" 
+                    : "text-gray-700 hover:text-cafe-orange hover:scale-105"
                 }`}
               >
-                Food Set
+                <div className="absolute inset-0 bg-gradient-to-r from-cafe-orange/15 via-amber-400/10 to-yellow-400/15 opacity-0 group-hover:opacity-100 transition-opacity duration-500 rounded-[23px]" />
+                <div className="absolute inset-0 bg-gradient-to-br from-white/10 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 rounded-[23px]" />
+                
+                {/* Icon and text */}
+                <div className="flex items-center gap-1 sm:gap-2 relative z-10">
+                  <span className="font-khmer text-base sm:text-sm group-hover:scale-110 transition-transform duration-300">ឈុតអាហារ</span>
+                </div>
+                
+                {activeTab === "food_set" && (
+                  <div className="absolute bottom-2 left-1/2 transform -translate-x-1/2 w-8 sm:w-10 h-1 bg-white/60 rounded-full animate-pulse shadow-lg" />
+                )}
+                
+                {activeTab === "food_set" && (
+                  <div className="absolute top-1 right-1 w-2 h-2 bg-white/50 rounded-full animate-pulse" />
+                )}
               </button>
             </div>
+            
+            {/* Enhanced shine effects */}
+            <div className="absolute top-0 left-0 right-0 h-2 bg-gradient-to-r from-transparent via-white/40 to-transparent rounded-t-[30px]" />
+            <div className="absolute bottom-0 left-0 right-0 h-1 bg-gradient-to-r from-transparent via-gray-200/30 to-transparent rounded-b-[30px]" />
+            
+            {/* Floating sparkles */}
+            <div className="absolute top-4 left-4 w-1 h-1 bg-cafe-orange/40 rounded-full animate-pulse" style={{ animationDelay: '0s', animationDuration: '2s' }} />
+            <div className="absolute bottom-4 right-4 w-1 h-1 bg-amber-400/40 rounded-full animate-pulse" style={{ animationDelay: '1s', animationDuration: '3s' }} />
           </div>
         </div>
 
@@ -353,70 +490,112 @@ export default function Index() {
               {currentMenuItems.map((item, index) => {
                 const isVisible = visibleItems.has(item.id.toString());
                 return (
-                  <div key={item.id} className="w-full" data-item-id={item.id}>
+                  <div key={item.id} className="w-full h-full" data-item-id={item.id}>
                     <div
-                      className={`bg-white rounded-[15px] shadow-lg overflow-hidden transition-all duration-500 ${
+                      className={`bg-white rounded-[20px] shadow-md hover:shadow-xl overflow-hidden transition-all duration-300 h-full flex flex-col relative group ${
                         isVisible
-                          ? "opacity-100 transform translate-y-0 scale-100 hover:shadow-xl hover:scale-105"
+                          ? "opacity-100 transform translate-y-0 scale-100 hover:scale-[1.02]"
                           : "opacity-0 transform translate-y-8 scale-95"
                       }`}
                       style={{ transitionDelay: `${index * 100}ms` }}
                     >
+                      {/* Top gradient bar */}
                       {isVisible && (
-                        <div className="absolute top-0 left-0 right-0 h-1 bg-gradient-to-r from-cafe-orange to-cafe-brown animate-pulse" />
+                        <div className="absolute top-0 left-0 right-0 h-1 bg-gradient-to-r from-cafe-orange via-yellow-400 to-cafe-brown opacity-80 group-hover:opacity-100 transition-opacity duration-300" />
                       )}
-                      <div className="aspect-square overflow-hidden relative">
+                      
+                      {/* Image Container */}
+                      <div className="aspect-square overflow-hidden relative bg-gray-50">
                         <ImageWithPlaceholder
                           src={item.image}
                           alt={item.name}
                           category={item.category}
                           isVisible={isVisible}
-                          className="w-full h-full object-cover"
+                          className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
                         />
+                        {/* Overlay gradient for better text readability */}
+                        <div className="absolute inset-0 bg-gradient-to-t from-black/10 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
                       </div>
+                      
+                      {/* Content Container - Fixed height for consistency */}
                       <div
-                        className={`p-3 sm:p-4 bg-white/50 transition-all duration-500 ${
+                        className={`p-2 sm:p-3 md:p-4 bg-gradient-to-b from-white to-gray-50/80 flex-1 flex flex-col justify-between min-h-[100px] sm:min-h-[120px] transition-all duration-500 ${
                           isVisible ? "translate-y-0" : "translate-y-4"
                         }`}
                       >
-                        <h3
-                          className={`font-poppins font-bold text-lg sm:text-xl text-cafe-text-dark mb-2 text-center ${
-                            isVisible ? "opacity-100" : "opacity-0"
-                          }`}
-                        >
-                          {item.name}
-                        </h3>
+                        {/* Title with fixed height */}
+                        <div className="flex-shrink-0 mb-2 sm:mb-3">
+                          <h3
+                            className={`font-poppins font-bold text-base sm:text-base md:text-lg text-cafe-text-dark text-center leading-tight h-10 sm:h-12 flex items-center justify-center transition-all duration-500 ${
+                              isVisible ? "opacity-100" : "opacity-0"
+                            }`}
+                            style={{
+                              display: '-webkit-box',
+                              WebkitLineClamp: 2,
+                              WebkitBoxOrient: 'vertical',
+                              overflow: 'hidden',
+                              textOverflow: 'ellipsis'
+                            }}
+                          >
+                            {item.name}
+                          </h3>
+                        </div>
+
+                        {/* Details section */}
                         <div
-                          className={`transition-all duration-500 ${
+                          className={`transition-all duration-500 space-y-1.5 sm:space-y-2 ${
                             isVisible
                               ? "opacity-100 translate-x-0"
                               : "opacity-0 translate-x-4"
                           }`}
                         >
-                          {/* Size and Price in horizontal layout */}
-                          <div className="flex items-center justify-between mb-1">
-                            {(activeTab === "food" ||
-                              activeTab === "food_set") && (
-                              <p className="font-poppins text-sm sm:text-base text-cafe-text-light">
-                                size : {item.size}
-                              </p>
-                            )}
-                            <p className="font-poppins text-sm sm:text-base text-cafe-text-light">
-                              price : {item.price}$
-                            </p>
+                          {/* Size and Price */}
+                          <div className="bg-white/60 rounded-lg p-1.5 sm:p-2 backdrop-blur-sm">
+                            <div className="flex items-center justify-between text-xs sm:text-sm">
+                              {(activeTab === "food" || activeTab === "food_set") && (
+                                <div className="flex items-center gap-0.5 sm:gap-1">
+                                  <span className="text-cafe-text-light font-medium text-xs">Size:</span>
+                                  <span className="text-cafe-text-dark font-semibold bg-cafe-orange/10 px-1.5 sm:px-2 py-0.5 rounded-full text-xs">
+                                    {item.size}
+                                  </span>
+                                </div>
+                              )}
+                              <div className="flex items-center gap-0.5 sm:gap-1 ml-auto">
+                                <span className="text-cafe-text-light font-medium text-xs">Price:</span>
+                                <span className="text-cafe-orange font-bold text-base sm:text-lg">
+                                  ${item.price}
+                                </span>
+                              </div>
+                            </div>
                           </div>
 
                           {/* Description */}
                           {item.description && (
-                            <p className="font-poppins text-xs text-cafe-text-light opacity-75 mt-1">
-                              {item.description}
-                            </p>
+                            <div className="bg-gray-50/80 rounded-lg p-1.5 sm:p-2">
+                              <p 
+                                className="font-poppins text-xs text-cafe-text-light leading-relaxed"
+                                style={{
+                                  display: '-webkit-box',
+                                  WebkitLineClamp: 2,
+                                  WebkitBoxOrient: 'vertical',
+                                  overflow: 'hidden',
+                                  textOverflow: 'ellipsis'
+                                }}
+                              >
+                                {item.description}
+                              </p>
+                            </div>
                           )}
                         </div>
                       </div>
+                      
+                      {/* Hover border effect */}
                       {isVisible && (
-                        <div className="absolute inset-0 rounded-[15px] ring-2 ring-cafe-orange/20 pointer-events-none animate-pulse"></div>
+                        <div className="absolute inset-0 rounded-[20px] ring-2 ring-cafe-orange/0 group-hover:ring-cafe-orange/30 pointer-events-none transition-all duration-300"></div>
                       )}
+                      
+                      {/* Corner accent */}
+                      <div className="absolute top-4 right-4 w-3 h-3 bg-cafe-orange rounded-full opacity-0 group-hover:opacity-100 transition-opacity duration-300 shadow-lg"></div>
                     </div>
                   </div>
                 );
