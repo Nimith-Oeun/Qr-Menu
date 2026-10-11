@@ -16,11 +16,18 @@ export const mockMenuItems: DisplayMenuItem[] = [
   { id: 101, name: "Signature Iced Latte", size: "M", price: "$3.50", image: drinkImages[0], category: "drink", description: "Silky espresso, cold milk, and a touch of sweetness." },
   { id: 102, name: "Caramel Macchiato", size: "L", price: "$4.25", image: drinkImages[1], category: "drink", description: "Bold espresso layered with caramel and steamed milk." },
   { id: 103, name: "Fresh Lime Tea", size: "M", price: "$2.75", image: drinkImages[2], category: "drink", description: "A refreshing blend of tea, lime, and crushed ice." },
-  { id: 104, name: "Grilled Chicken Bowl", size: "M", price: "$6.50", image: foodImages[0], category: "food", description: "Smoky grilled chicken served with greens and rice." },
-  { id: 105, name: "Garden Fresh Salad", size: "M", price: "$5.25", image: foodImages[1], category: "food", description: "Crisp seasonal vegetables with our house dressing." },
-  { id: 106, name: "Creamy Pasta", size: "L", price: "$7.50", image: foodImages[2], category: "food", description: "Comforting pasta tossed in a rich creamy sauce." },
-  { id: 107, name: "Cafe Sharing Set", size: "Set", price: "$12.00", image: foodImages[0], category: "food_set", description: "A generous combination for sharing with friends." },
-  { id: 108, name: "BBQ Duo Set", size: "Set", price: "$15.00", image: foodImages[2], category: "food_set", description: "Our customer-favorite BBQ pairing with sides." },
+  { id: 104, name: "Honey Cold Brew", size: "M", price: "$3.75", image: drinkImages[0], category: "drink", description: "Slow-steeped coffee rounded out with local honey." },
+  { id: 105, name: "Matcha Cloud", size: "L", price: "$4.50", image: drinkImages[1], category: "drink", description: "Bright matcha topped with a silky chilled foam." },
+  { id: 106, name: "Peach Sparkler", size: "M", price: "$3.25", image: drinkImages[2], category: "drink", description: "Juicy peach, citrus, and sparkling soda over ice." },
+  { id: 107, name: "Grilled Chicken Bowl", size: "M", price: "$6.50", image: foodImages[0], category: "food", description: "Smoky grilled chicken served with greens and rice." },
+  { id: 108, name: "Garden Fresh Salad", size: "M", price: "$5.25", image: foodImages[1], category: "food", description: "Crisp seasonal vegetables with our house dressing." },
+  { id: 109, name: "Creamy Pasta", size: "L", price: "$7.50", image: foodImages[2], category: "food", description: "Comforting pasta tossed in a rich creamy sauce." },
+  { id: 110, name: "Crispy BBQ Wings", size: "M", price: "$8.25", image: foodImages[0], category: "food", description: "Crispy wings glazed with our smoky house BBQ sauce." },
+  { id: 111, name: "Coconut Rice Plate", size: "M", price: "$6.75", image: foodImages[1], category: "food", description: "Fragrant coconut rice with vegetables and herbs." },
+  { id: 112, name: "Cafe Sharing Set", size: "Set", price: "$12.00", image: foodImages[0], category: "food_set", description: "A generous combination for sharing with friends." },
+  { id: 113, name: "BBQ Duo Set", size: "Set", price: "$15.00", image: foodImages[2], category: "food_set", description: "Our customer-favorite BBQ pairing with sides." },
+  { id: 114, name: "Weekend Feast Set", size: "Set", price: "$18.50", image: foodImages[1], category: "food_set", description: "A relaxed feast with mains, sides, and dipping sauces." },
+  { id: 115, name: "Friends Platter", size: "Set", price: "$22.00", image: foodImages[0], category: "food_set", description: "A shareable platter made for the whole table." },
 ];
 
 export function getMockMenuItems() {
