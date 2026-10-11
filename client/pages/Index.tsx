@@ -2,30 +2,24 @@ import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { menuApi, DisplayMenuItem, ApiError } from "../lib/api";
 import ImageWithPlaceholder from "../components/ImageWithPlaceholder";
+import { getMockMenuItems } from "../lib/mockData";
 
 export default function Index() {
   const navigate = useNavigate();
   const [activeTab, setActiveTab] = useState("drink");
   const [isScrolled, setIsScrolled] = useState(false);
   const [visibleItems, setVisibleItems] = useState(new Set());
-  const [menuItems, setMenuItems] = useState<DisplayMenuItem[]>([]);
-  const [loading, setLoading] = useState(true);
+  const [menuItems, setMenuItems] = useState<DisplayMenuItem[]>(getMockMenuItems());
+  const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
 
   // Auto-fetch menu data when component mounts
   useEffect(() => {
     const fetchMenuData = async () => {
       try {
-        setLoading(true);
         setError(null);
 
-        console.log("🔄 Auto-fetching menu data...");
-
-        // Test API connectivity first
-        await menuApi.test();
-        console.log("✅ API connectivity test successful");
-
-        // Fetch menu data
+        // Fetch live data when available; mock data remains visible while it loads.
         const response = await menuApi.getMenuSeparated();
         console.log("📋 Menu data fetched:", {
           drinks: response.drinks.length,
@@ -56,45 +50,9 @@ export default function Index() {
           setError("Failed to load menu. Please check your connection.");
         }
 
-        // Fallback to mock data
-        console.log("🔄 Loading fallback mock data...");
-        const mockItems: DisplayMenuItem[] = [
-          // Drinks
-          ...Array.from({ length: 5 }, (_, i) => ({
-            id: i + 1,
-            name: `Coffee Drink ${i + 1}`,
-            size: i % 2 === 0 ? "M" : "L",
-            price: `${2 + (i % 3)}`,
-            image:
-              "https://api.builder.io/api/v1/image/assets/TEMP/2e811b0fa84092c929b579286fded5e620c45c19?width=347",
-            category: "drink" as const,
-            description: `Delicious coffee drink #${i + 1}`,
-          })),
-          // Foods
-          ...Array.from({ length: 5 }, (_, i) => ({
-            id: i + 6,
-            name: `Food Item ${i + 1}`,
-            size: i % 2 === 0 ? "M" : "L",
-            price: `${4 + (i % 4)}`,
-            image:
-              "https://api.builder.io/api/v1/image/assets/TEMP/977e1ee7cf4be018cd9e90c67e54df15c36e50b0?width=347",
-            category: "food" as const,
-            description: `Tasty food item #${i + 1}`,
-          })),
-          // Food Sets
-          ...Array.from({ length: 3 }, (_, i) => ({
-            id: i + 11,
-            name: `Food Set ${i + 1}`,
-            size: "Set",
-            price: `${8 + (i % 3)}`,
-            image:
-              "https://api.builder.io/api/v1/image/assets/TEMP/c4f8c9b2d3e4f5a6b7c8d9e0f1a2b3c4d5e6f7a8?width=347",
-            category: "food_set" as const,
-            description: `Complete meal set #${i + 1}`,
-          })),
-        ];
+        // Keep the preview usable when the backend is offline.
+        const mockItems = getMockMenuItems();
         setMenuItems(mockItems);
-        console.log("📋 Mock data loaded:", mockItems.length, "items");
       } finally {
         setLoading(false);
       }
@@ -309,7 +267,7 @@ export default function Index() {
             <div className="text-center py-8">
               <div className="inline-block animate-spin rounded-full h-8 w-8 border-b-2 border-cafe-orange"></div>
               <p className="mt-2 text-cafe-text-medium">
-                🔄 Loading fresh menu data...
+                🔄 Syncing latest menu data...
               </p>
             </div>
           )}

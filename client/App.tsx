@@ -20,6 +20,7 @@ const App = () => (
       <Sonner />
       <BrowserRouter>
         <Routes>
+          <Route path="/" element={<Index />} />
           <Route path="/qr-menu-chhong_caffe" element={<Index />} />
           <Route path="/qr-menu-chhong_caffe/create-item" element={<CreateItem />} />
           <Route path="/qr-menu-chhong_caffe/admin" element={<Admin />} />
